@@ -10,6 +10,9 @@ import {NavDropdown} from "react-bootstrap";
 //icons
 import Radio from './icons/radio-solid.svg'
 
+//
+import PMBB from './images/PMBB_cover.jpeg'
+
 
 class App extends Component {
   // Constructor method is called when a new instance is created
@@ -32,13 +35,13 @@ class App extends Component {
   render() {
     return (
         <section>
-          <Navbar expand="lg" className="bg-body-tertiary">
+          <Navbar expand="lg" className="navbar navbar-dark bg-dark" style={{backgroundColor: "lightblue"}}>
             <Container>
               <Navbar.Brand href="#home">
                 {/*icon: https://fontawesome.com/icons/radio?f=classic&s=solid
                 display: https://blog.logrocket.com/how-to-use-svgs-react/#using-img-tag
                 how to use comments in render: https://wesbos.com/react-jsx-comments*/}
-                <img src={Radio} width="30" height="30" alt=""  className="d-inline-block align-top"/>{' '}
+                <img src={Radio} width="30" height="30" alt="Radio Logo"  className="d-inline-block align-top"/>{' '}
                 Thump
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -64,8 +67,8 @@ class App extends Component {
               </Navbar.Collapse>
             </Container>
           </Navbar>
-          <div>
-
+          <div className="d-flex justify-content-center Gradient">
+            <div id="image-container"></div>
           </div>
           <article>
             <h1>Hello World!</h1>

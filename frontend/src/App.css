@@ -28,6 +28,21 @@
   color: #61dafb;
 }
 
+.Gradient{
+  height: 500px;
+  background: rgb(9,11,10,1);
+  background: radial-gradient(circle,  rgba(9,11,10,1) 60%, rgb(17, 48, 63) 100%);
+}
+
+/*https://jsfiddle.net/Konrud/owcdfjuh/*/
+#image-container {
+  background: url("images/PMBB_cover.jpeg") left top no-repeat;
+  box-shadow: 25px 25px 50px 0 rgb(9,11,10,1) inset, -25px -25px 50px 0 rgba(9,11,10,1) inset;
+  width: 500px;
+  height: 500px;
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
