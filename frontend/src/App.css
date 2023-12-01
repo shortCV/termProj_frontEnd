@@ -28,10 +28,30 @@
   color: #61dafb;
 }
 
+h1 {
+  text-shadow: 5px 5px 10px rgba(9,11,10,1);
+}
+
 .Gradient{
   height: 500px;
   background: rgb(9,11,10,1);
   background: radial-gradient(circle,  rgba(9,11,10,1) 60%, rgb(17, 48, 63) 100%);
+}
+
+.active-pink-2 input[type="text"]:focus:not([readonly]) {
+  border-bottom: 1px solid #f48fb1;
+  box-shadow: 0 1px 0 0 #f48fb1;
+}
+
+.search{
+  border: 1px solid #ccc;
+  outline: none;
+  background-size: 22px;
+  background-position: 13px;
+  border-radius: 10px;
+  width: 600px;
+  height: 50px;
+  padding-left: 100px;
 }
 
 /*https://jsfiddle.net/Konrud/owcdfjuh/*/
