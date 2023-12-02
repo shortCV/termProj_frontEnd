@@ -1,5 +1,5 @@
 import './App.css';
-import {Component} from "react";
+import {Component, useState } from "react";
 
 //Navigation
 import Nav from 'react-bootstrap/Nav';
@@ -23,19 +23,26 @@ class App extends Component {
     super(props);
     this.state = {
       myText: 'this is something that is stored in my application state',
-      disabled: false
+      disabled: false,
+      songs: [],
     }
   }
-  handleClick(){
-    console.log("Hello World")
-    this.setState({disabled: !this.state.disabled})
+
+  componentDidMount() {
+    fetch("http://127.0.0.1:8000/api/get_songs/")
+        .then(response => response.json())
+        .then(data => {
+          this.setState({ songs: data.songs });
+        })
+        .catch(error => {
+          console.error("Error fetching songs:", error);
+        });
   }
-  hello(){
-    console.log("hi")
-  }
+
 
   // This is called automatically
   render() {
+    const { songs } = this.state;
     return (
         <div>
           <div>
@@ -76,12 +83,40 @@ class App extends Component {
             <div className="position-absolute top-50 start-50 translate-middle ">
               <h1 class="text-center " style={{color: "white"}}>What Have You Been Listening To? </h1>
               <input type="text" className="search" name="" placeholder="search song, album, artist..." />
+              <div className="col-md-12 text-center p-2">
+                <button className="btn btn-primary" onClick={this.handleSearch}>
+                  Search
+                </button>
+              </div>
+
             </div>
           </div>
           <article className="Gradient">
-            <h1 style={{color: "white"}}>Hello World!</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ullamcorper velit sed ullamcorper morbi. Viverra aliquet eget sit amet. Eget dolor morbi non arcu. Auctor elit sed vulputate mi sit amet. Duis tristique sollicitudin nibh sit amet commodo nulla facilisi nullam. Sit amet volutpat consequat mauris nunc congue nisi. Ullamcorper eget nulla facilisi etiam dignissim. Massa enim nec dui nunc mattis enim ut tellus elementum. Vel pretium lectus quam id.</p>
-            <button type="button" className="btn btn-outline-success">Comment</button>
+            <div>
+              <br/>
+              <h1 className="p-lg-5" style={{color: "white"}}>New Releases</h1>
+              {/* Display Songs */}
+              <div>
+                <div className="d-flex justify-content-center text-center">
+                  {songs.slice(23, 27).map((song, index) => (
+                      <div key={index} style={{ color: 'white' }} className="p-lg-5">
+                        <img src={PMBB} height="180px" width="180px" className="p-2" alt={song.title}/>
+                        <br/>
+                        {song.title} by {song.artist.join(', ')}
+                      </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+          <article className="Gradient">
+            <div>
+              <br/>
+              <h1 className="p-lg-5" style={{color: "white"}}>Popular Reviews</h1>
+            </div>
+          </article>
+          <article className="bg-dark">
+            <br/>
           </article>
         </div>
     )
