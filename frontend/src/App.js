@@ -25,6 +25,7 @@ class App extends Component {
       myText: 'this is something that is stored in my application state',
       disabled: false,
       songs: [],
+      reviews: [],
     }
   }
 
@@ -37,11 +38,27 @@ class App extends Component {
         .catch(error => {
           console.error("Error fetching songs:", error);
         });
+
+    fetch("http://127.0.0.1:8000/api/get_reviews/")
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Something has gone wrong. Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log("Reviews data:", data);
+          this.setState({ reviews: data.reviews });
+        })
+        .catch(error => {
+          console.error("Error fetching reviews:", error);
+        });
   }
 
   // This is called automatically
   render() {
     const { songs } = this.state;
+    const { reviews } = this.state;
     return (
         <div>
           <div>
@@ -112,6 +129,21 @@ class App extends Component {
             <div>
               <br/>
               <h1 className="p-lg-5" style={{color: "white"}}>Popular Reviews</h1>
+              <div>
+                <div className="d-flex justify-content-center text-center">
+                  {reviews.map((review, index) => (
+                      <div key={index} style={{ color: 'white' }} className="p-lg-5">
+                        {review.song.title}
+                        <img src={placeHold} height="220px" width="220px" className="p-2" alt={review.title}/>
+                        <br/>
+                        {review.title} by {review.user}
+                        <br/>
+                        {review.text}
+                        <br/>
+                      </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </article>
           <article className="bg-dark">
