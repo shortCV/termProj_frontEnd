@@ -12,10 +12,10 @@ import Radio from './icons/radio-solid.svg'
 
 //
 import PMBB from './images/PMBB_cover.jpeg'
+import placeHold from './images/placeholder-image-dark.jpg'
 
 //
-import { MDBCol, MDBInput } from "mdbreact";
-
+import {Route, Link} from 'react-router-dom'
 
 class App extends Component {
   // Constructor method is called when a new instance is created
@@ -38,7 +38,6 @@ class App extends Component {
           console.error("Error fetching songs:", error);
         });
   }
-
 
   // This is called automatically
   render() {
@@ -81,7 +80,7 @@ class App extends Component {
           <div className="d-flex justify-content-center Gradient">
             <div id="image-container"></div>
             <div className="position-absolute top-50 start-50 translate-middle ">
-              <h1 class="text-center " style={{color: "white"}}>What Have You Been Listening To? </h1>
+              <h1 className="text-center " style={{color: "white"}}>What Have You Been Listening To? </h1>
               <input type="text" className="search" name="" placeholder="search song, album, artist..." />
               <div className="col-md-12 text-center p-2">
                 <button className="btn btn-primary" onClick={this.handleSearch}>
@@ -100,7 +99,7 @@ class App extends Component {
                 <div className="d-flex justify-content-center text-center">
                   {songs.slice(23, 27).map((song, index) => (
                       <div key={index} style={{ color: 'white' }} className="p-lg-5">
-                        <img src={PMBB} height="180px" width="180px" className="p-2" alt={song.title}/>
+                        <img src={placeHold} height="220px" width="220px" className="p-2" alt={song.title}/>
                         <br/>
                         {song.title} by {song.artist.join(', ')}
                       </div>
@@ -116,12 +115,19 @@ class App extends Component {
             </div>
           </article>
           <article className="bg-dark">
-            <br/>
+            <div className="d-flex justify-content-center text-center">
+              <h5 className="p-4 bold-text" style={{color: "lightsteelblue"}}>About</h5>
+              <h5 className="p-4 bold-text" style={{color: "lightsteelblue"}}>Help</h5>
+              <h5 className="p-4 bold-text" style={{color: "lightsteelblue"}}>FAQ</h5>
+              <h5 className="p-4 bold-text" style={{color: "lightsteelblue"}}>Top 10</h5>
+              <h5 className="p-4 bold-text" style={{color: "lightsteelblue"}}>Socials</h5>
+            </div>
           </article>
         </div>
     )
   }
 }
+
 /*
 <MDBCol md="12">
                 <MDBInput hint="Search" type="text" containerClass="active-pink active-pink-2 mt-0 mb-3" />
