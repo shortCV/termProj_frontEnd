@@ -20,10 +20,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      myText: 'this is something that is stored in my application state',
-      disabled: false,
-      songs: [],
-      reviews: [],
+        myText: 'this is something that is stored in my application state',
+        disabled: false,
+        songs: [],
+        reviews: [],
+        searchInput: "",
     }
   }
 
@@ -56,8 +57,11 @@ class App extends Component {
 
   // This is called automatically
   render() {
-    const { songs } = this.state;
-    const { reviews } = this.state;
+      const { songs } = this.state;
+      const { reviews } = this.state;
+      const { searchInput } = this.state;
+      // State to manage the search input
+
     return (
             <div>
                 <div>
@@ -67,9 +71,9 @@ class App extends Component {
                     <div id="image-container"></div>
                     <div className="position-absolute top-50 start-50 translate-middle ">
                         <h1 className="text-center " style={{color: "white"}}>What Have You Been Listening To? </h1>
-                        <input type="text" className="search" name="" placeholder="search song, album, artist..." />
+                        <input type="text" className="search" name="" placeholder="search song, album, artist..." value={searchInput} onChange={(e) => this.setState({ searchInput: e.target.value })} />
                         <div className="col-md-12 text-center p-2">
-                            <Link to="search">
+                            <Link to={`/search?q=${searchInput}`}>
                                 <button className="btn btn-primary">
                                 Search
                                 </button>
