@@ -1,6 +1,7 @@
 import './App.css';
 import {Component, useState } from "react";
 
+
 //Navigation
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -9,13 +10,15 @@ import {NavDropdown} from "react-bootstrap";
 
 //icons
 import Radio from './icons/radio-solid.svg'
+import Heart from './icons/heart-solid.svg'
 
 //
 import PMBB from './images/PMBB_cover.jpeg'
 import placeHold from './images/placeholder-image-dark.jpg'
 
 //
-import {Route, Link} from 'react-router-dom'
+import {BrowserRouter, Route, Link, Router, Switch} from 'react-router-dom'
+import {MDBIcon} from "mdbreact";
 
 class App extends Component {
   // Constructor method is called when a new instance is created
@@ -62,37 +65,37 @@ class App extends Component {
     return (
         <div>
           <div>
-            <Navbar expand="lg" className="navbar navbar-dark bg-dark">
-              <Container>
-                <Navbar.Brand href="#home" className="navbar-brand mb-0 h1">
-                  {/*icon: https://fontawesome.com/icons/radio?f=classic&s=solid
-                display: https://blog.logrocket.com/how-to-use-svgs-react/#using-img-tag
-                how to use comments in render: https://wesbos.com/react-jsx-comments*/}
-                  <img src={Radio} width="40" height="40" alt="Radio Logo"  className="d-inline-block align-top"/>{' '}
-                  THUMP
-                </Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                  <Nav className="me-auto">
-                    <Nav.Link href="#home">Artist</Nav.Link>
+              <Navbar expand="lg" className="navbar navbar-dark bg-dark">
+                  <Container>
+                    <Navbar.Brand href="#home" className="navbar-brand mb-0 h1">
+                      {/*icon: https://fontawesome.com/icons/radio?f=classic&s=solid
+                    display: https://blog.logrocket.com/how-to-use-svgs-react/#using-img-tag
+                    how to use comments in render: https://wesbos.com/react-jsx-comments*/}
+                      <img src={Radio} width="40" height="40" alt="Radio Logo"  className="d-inline-block align-top"/>{' '}
+                      THUMP
+                    </Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav">
+                      <Nav className="me-auto">
+                        <Nav.Link href="#home">Artist</Nav.Link>
 
-                    <Nav.Link href="#link">Songs</Nav.Link>
+                        <Nav.Link href="#link">Songs</Nav.Link>
 
-                    <NavDropdown title="Playlists" id="basic-nav-dropdown">
-                      <NavDropdown.Item href="#action/3.1">My Playlists</NavDropdown.Item>
-                      <NavDropdown.Item href="#action/3.2">Saved Playlists</NavDropdown.Item>
-                      <NavDropdown.Item href="#action/3.3">Featured Playlists</NavDropdown.Item>
-                      <NavDropdown.Divider />
-                      <NavDropdown.Item href="#action/3.4">Create Playlist</NavDropdown.Item>
-                    </NavDropdown>
-                  </Nav>
-                  <Nav className="justify-content-end">
-                    <Nav.Link href="#link">Sign Up</Nav.Link>
-                    <Nav.Link href="#link">Log in</Nav.Link>
-                  </Nav>
-                </Navbar.Collapse>
-              </Container>
-            </Navbar>
+                        <NavDropdown title="Playlists" id="basic-nav-dropdown">
+                          <NavDropdown.Item href="#action/3.1">My Playlists</NavDropdown.Item>
+                          <NavDropdown.Item href="#action/3.2">Saved Playlists</NavDropdown.Item>
+                          <NavDropdown.Item href="#action/3.3">Featured Playlists</NavDropdown.Item>
+                          <NavDropdown.Divider />
+                          <NavDropdown.Item href="#action/3.4">Create Playlist</NavDropdown.Item>
+                        </NavDropdown>
+                      </Nav>
+                      <Nav className="justify-content-end">
+                        <Nav.Link href="#link">Sign Up</Nav.Link>
+                        <Nav.Link href="#link">Log in</Nav.Link>
+                      </Nav>
+                    </Navbar.Collapse>
+                  </Container>
+                </Navbar>
           </div>
           <div className="d-flex justify-content-center Gradient">
             <div id="image-container"></div>
@@ -116,9 +119,11 @@ class App extends Component {
                 <div className="d-flex justify-content-center text-center">
                   {songs.slice(23, 27).map((song, index) => (
                       <div key={index} style={{ color: 'white' }} className="p-lg-5">
+                        {song.title}
+                        <br/>
                         <img src={placeHold} height="220px" width="220px" className="p-2" alt={song.title}/>
                         <br/>
-                        {song.title} by {song.artist.join(', ')}
+                        by {song.artist.join(', ')}
                       </div>
                   ))}
                 </div>
@@ -131,20 +136,34 @@ class App extends Component {
               <h1 className="p-lg-5" style={{color: "white"}}>Popular Reviews</h1>
               <div>
                 <div className="d-flex justify-content-center text-center">
-                  {reviews.map((review, index) => (
+                  {reviews.slice(3, 7).map((review, index) => (
                       <div key={index} style={{ color: 'white' }} className="p-lg-5">
-                        {review.song.title}
+                        <div className="bold-text justify-content-center text-center">
+                          {review.song.title}
+                        </div>
+                        {review.song.artist}
                         <img src={placeHold} height="220px" width="220px" className="p-2" alt={review.title}/>
                         <br/>
-                        {review.title} by {review.user}
+                        {review.title} - {review.user}
                         <br/>
+                        <hr/>
+                        Rating: {review.rating}/10
+                        <hr/>
                         {review.text}
-                        <br/>
+                        <br/><br/>
+                        <h6 style={{ color: 'gray', fontSize: '15px'}}>
+                          <button type="button" className="btn-secondary">
+                              <img src={Heart} width="15" height="15" alt="Heart Logo"  className="d-inline-block"/>
+                          </button> like review | {review.likes}
+                        </h6>
                       </div>
                   ))}
                 </div>
               </div>
             </div>
+          </article>
+          <article className="Gradient">
+
           </article>
           <article className="bg-dark">
             <div className="d-flex justify-content-center text-center">
@@ -161,6 +180,9 @@ class App extends Component {
 }
 
 /*
+
+<img src={Heart} width="15" height="15" alt="Heart Logo"  className="d-inline-block"/>
+///
 <MDBCol md="12">
                 <MDBInput hint="Search" type="text" containerClass="active-pink active-pink-2 mt-0 mb-3" />
               </MDBCol>
