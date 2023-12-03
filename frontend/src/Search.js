@@ -52,27 +52,37 @@ const Search = () => {
     return (
         <div>
             <Navbar />
-            <h2>Search</h2>
-            <h4>Results for: {searchQuery}</h4>
+            <div className="Gradient-less">
+                <h1 className="p-2 text-center " style={{color: "white"}}>Search</h1>
+                <h4 className="p-4 text-center " style={{color: "white"}}>Results for:</h4>
+                <hr style={{color: "lightblue"}}/>
+                <h1 className="p-2 text-center " style={{color: "lightblue"}}>{searchQuery} </h1>
+                <hr style={{color: "lightblue"}}/>
+            </div>
+            <div className="Gradient">
+                <h4 className=" p-2 text-center " style={{color: "white"}}>Songs</h4>
+                <ul className=" p-2 text-center " style={{color: "white"}}>
+                    {filteredSongs.filter(song => song.title.includes(searchQuery)).map((song) => (
+                        <li key={song.title}>{song.title} by {song.artist.join(', ')}</li>
+                    ))}
+                </ul>
+                <h4 className=" p-2 text-center " style={{color: "white"}}>Artists</h4>
+                <ul className=" p-2 text-center " style={{color: "white"}}>
+                    {filteredArtists.filter(artist => artist.name.includes(searchQuery)).map((artist) => (
+                        <li key={artist.name}>{artist.name}</li>
+                    ))}
+                </ul>
+                <h4 className=" p-2 text-center " style={{color: "white"}}>Albums</h4>
+                <ul className="p-2 text-center " style={{color: "white"}}>
+                    {filteredAlbums.filter(album => album.title.includes(searchQuery)).map((album) => (
+                        <li key={album.title}>{album.title}</li>
+                    ))}
+                </ul>
+            </div>
 
-            <h4>Songs</h4>
-            <ul>
-                {filteredSongs.filter(song => song.title.includes(searchQuery)).map((song) => (
-                    <li key={song.title}>{song.title} by {song.artist.join(', ')}</li>
-                ))}
-            </ul>
-            <h4>Artists</h4>
-            <ul>
-                {filteredArtists.filter(artist => artist.name.includes(searchQuery)).map((artist) => (
-                    <li key={artist.name}>{artist.name}</li>
-                ))}
-            </ul>
-            <h4>Albums</h4>
-            <ul>
-                {filteredAlbums.filter(album => album.title.includes(searchQuery)).map((album) => (
-                    <li key={album.title}>{album.title}</li>
-                ))}
-            </ul>
+            <div className="Gradient">
+            </div>
+
         </div>
     );
 };
