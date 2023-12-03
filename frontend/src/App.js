@@ -1,17 +1,10 @@
 import './App.css';
 import {Component, useState } from "react";
-import {BrowserRouter as Router, Link, Route, Routes, Switch} from 'react-router-dom';
-
-//Navigation
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import Container from 'react-bootstrap/Container';
-import {NavDropdown} from "react-bootstrap";
+import {Link, useNavigate} from 'react-router-dom';
 
 import Navbard from './components/Navbar'
-
+import Search from './Search'
 //icons
-import Radio from './icons/radio-solid.svg'
 import Heart from './icons/heart-solid.svg'
 
 //
@@ -20,11 +13,9 @@ import placeHold from './images/placeholder-image-dark.jpg'
 //
 
 
-//
-import Playlist from './Playlist';
-//import NotFound from './NotFound';
-
 class App extends Component {
+
+
   // Constructor method is called when a new instance is created
   constructor(props) {
     super(props);
@@ -35,6 +26,7 @@ class App extends Component {
       reviews: [],
     }
   }
+
 
   componentDidMount() {
     fetch("http://127.0.0.1:8000/api/get_songs/")
@@ -77,9 +69,11 @@ class App extends Component {
                         <h1 className="text-center " style={{color: "white"}}>What Have You Been Listening To? </h1>
                         <input type="text" className="search" name="" placeholder="search song, album, artist..." />
                         <div className="col-md-12 text-center p-2">
-                            <button className="btn btn-primary" onClick={this.handleSearch}>
+                            <Link to="search">
+                                <button className="btn btn-primary">
                                 Search
-                            </button>
+                                </button>
+                            </Link>
                         </div>
 
                     </div>

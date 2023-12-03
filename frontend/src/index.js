@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import Playlist from './Playlist'
+import Search from './Search'
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 import {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
     {
         path: "playlists",
         element: <Playlist/>
+    },
+    {
+        path: "search",
+        element: <Search/>
     },
 ]);
 
