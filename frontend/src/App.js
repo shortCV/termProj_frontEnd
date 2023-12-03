@@ -13,12 +13,14 @@ import Radio from './icons/radio-solid.svg'
 import Heart from './icons/heart-solid.svg'
 
 //
-import PMBB from './images/PMBB_cover.jpeg'
 import placeHold from './images/placeholder-image-dark.jpg'
 
 //
-import {BrowserRouter, Route, Link, Router, Switch} from 'react-router-dom'
-import {MDBIcon} from "mdbreact";
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+
+//
+import Playlist from './Playlist';
+//import NotFound from './NotFound';
 
 class App extends Component {
   // Constructor method is called when a new instance is created
@@ -63,118 +65,124 @@ class App extends Component {
     const { songs } = this.state;
     const { reviews } = this.state;
     return (
-        <div>
-          <div>
-              <Navbar expand="lg" className="navbar navbar-dark bg-dark">
-                  <Container>
-                    <Navbar.Brand href="#home" className="navbar-brand mb-0 h1">
-                      {/*icon: https://fontawesome.com/icons/radio?f=classic&s=solid
+        <Router>
+            <div>
+                <div>
+                    <Navbar expand="lg" className="navbar navbar-dark bg-dark">
+                        <Container>
+                            <Navbar.Brand href="#home" className="navbar-brand mb-0 h1">
+                                {/*icon: https://fontawesome.com/icons/radio?f=classic&s=solid
                     display: https://blog.logrocket.com/how-to-use-svgs-react/#using-img-tag
                     how to use comments in render: https://wesbos.com/react-jsx-comments*/}
-                      <img src={Radio} width="40" height="40" alt="Radio Logo"  className="d-inline-block align-top"/>{' '}
-                      THUMP
-                    </Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                      <Nav className="me-auto">
-                        <Nav.Link href="#home">Artist</Nav.Link>
+                                <img src={Radio} width="40" height="40" alt="Radio Logo"  className="d-inline-block align-top"/>{' '}
+                                THUMP
+                            </Navbar.Brand>
+                            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                            <Navbar.Collapse id="basic-navbar-nav">
+                                <Nav className="me-auto">
+                                    <Nav.Link href="#home">Artist</Nav.Link>
 
-                        <Nav.Link href="#link">Songs</Nav.Link>
+                                    <Nav.Link href="#link">Songs</Nav.Link>
 
-                        <NavDropdown title="Playlists" id="basic-nav-dropdown">
-                          <NavDropdown.Item href="#action/3.1">My Playlists</NavDropdown.Item>
-                          <NavDropdown.Item href="#action/3.2">Saved Playlists</NavDropdown.Item>
-                          <NavDropdown.Item href="#action/3.3">Featured Playlists</NavDropdown.Item>
-                          <NavDropdown.Divider />
-                          <NavDropdown.Item href="#action/3.4">Create Playlist</NavDropdown.Item>
-                        </NavDropdown>
-                      </Nav>
-                      <Nav className="justify-content-end">
-                        <Nav.Link href="#link">Sign Up</Nav.Link>
-                        <Nav.Link href="#link">Log in</Nav.Link>
-                      </Nav>
-                    </Navbar.Collapse>
-                  </Container>
-                </Navbar>
-          </div>
-          <div className="d-flex justify-content-center Gradient">
-            <div id="image-container"></div>
-            <div className="position-absolute top-50 start-50 translate-middle ">
-              <h1 className="text-center " style={{color: "white"}}>What Have You Been Listening To? </h1>
-              <input type="text" className="search" name="" placeholder="search song, album, artist..." />
-              <div className="col-md-12 text-center p-2">
-                <button className="btn btn-primary" onClick={this.handleSearch}>
-                  Search
-                </button>
-              </div>
-
-            </div>
-          </div>
-          <article className="Gradient">
-            <div>
-              <br/>
-              <h1 className="p-lg-5" style={{color: "white"}}>New Releases</h1>
-              {/* Display Songs */}
-              <div>
-                <div className="d-flex justify-content-center text-center">
-                  {songs.slice(23, 27).map((song, index) => (
-                      <div key={index} style={{ color: 'white' }} className="p-lg-5">
-                        {song.title}
-                        <br/>
-                        <img src={placeHold} height="220px" width="220px" className="p-2" alt={song.title}/>
-                        <br/>
-                        by {song.artist.join(', ')}
-                      </div>
-                  ))}
+                                    <NavDropdown title="Playlists" id="basic-nav-dropdown">
+                                        <NavDropdown.Item href="#playlists">My Playlists</NavDropdown.Item>
+                                        <NavDropdown.Item href="#action/3.2">Saved Playlists</NavDropdown.Item>
+                                        <NavDropdown.Item href="#action/3.3">Featured Playlists</NavDropdown.Item>
+                                        <NavDropdown.Divider />
+                                        <NavDropdown.Item href="#action/3.4">Create Playlist</NavDropdown.Item>
+                                    </NavDropdown>
+                                </Nav>
+                                <Nav className="justify-content-end">
+                                    <Nav.Link href="#link">Sign Up</Nav.Link>
+                                    <Nav.Link href="#link">Log in</Nav.Link>
+                                </Nav>
+                            </Navbar.Collapse>
+                        </Container>
+                    </Navbar>
+                    {/* Routes */}
+                    <Switch>
+                        <Route path="/playlists" component={Playlist} />
+                    </Switch>
                 </div>
-              </div>
-            </div>
-          </article>
-          <article className="Gradient">
-            <div>
-              <br/>
-              <h1 className="p-lg-5" style={{color: "white"}}>Popular Reviews</h1>
-              <div>
-                <div className="d-flex justify-content-center text-center">
-                  {reviews.slice(3, 7).map((review, index) => (
-                      <div key={index} style={{ color: 'white' }} className="p-lg-5">
-                        <div className="bold-text justify-content-center text-center">
-                          {review.song.title}
+                <div className="d-flex justify-content-center Gradient">
+                    <div id="image-container"></div>
+                    <div className="position-absolute top-50 start-50 translate-middle ">
+                        <h1 className="text-center " style={{color: "white"}}>What Have You Been Listening To? </h1>
+                        <input type="text" className="search" name="" placeholder="search song, album, artist..." />
+                        <div className="col-md-12 text-center p-2">
+                            <button className="btn btn-primary" onClick={this.handleSearch}>
+                                Search
+                            </button>
                         </div>
-                        {review.song.artist}
-                        <img src={placeHold} height="220px" width="220px" className="p-2" alt={review.title}/>
-                        <br/>
-                        {review.title} - {review.user}
-                        <br/>
-                        <hr/>
-                        Rating: {review.rating}/10
-                        <hr/>
-                        {review.text}
-                        <br/><br/>
-                        <h6 style={{ color: 'gray', fontSize: '15px'}}>
-                          <button type="button" className="btn-secondary">
-                              <img src={Heart} width="15" height="15" alt="Heart Logo"  className="d-inline-block"/>
-                          </button> like review | {review.likes}
-                        </h6>
-                      </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </article>
-          <article className="Gradient">
 
-          </article>
-          <article className="bg-dark">
-            <div className="d-flex justify-content-center text-center">
-              <h5 className="p-4 bold-text" style={{color: "lightsteelblue"}}>About</h5>
-              <h5 className="p-4 bold-text" style={{color: "lightsteelblue"}}>Help</h5>
-              <h5 className="p-4 bold-text" style={{color: "lightsteelblue"}}>FAQ</h5>
-              <h5 className="p-4 bold-text" style={{color: "lightsteelblue"}}>Top 10</h5>
-              <h5 className="p-4 bold-text" style={{color: "lightsteelblue"}}>Socials</h5>
+                    </div>
+                </div>
+                <article className="Gradient">
+                    <div>
+                        <br/>
+                        <h1 className="p-lg-5" style={{color: "white"}}>New Releases</h1>
+                        {/* Display Songs */}
+                        <div>
+                            <div className="d-flex justify-content-center text-center">
+                                {songs.slice(23, 27).map((song, index) => (
+                                    <div key={index} style={{ color: 'white' }} className="p-lg-5">
+                                        {song.title}
+                                        <br/>
+                                        <img src={placeHold} height="220px" width="220px" className="p-2" alt={song.title}/>
+                                        <br/>
+                                        by {song.artist.join(', ')}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <article className="Gradient">
+                    <div>
+                        <br/>
+                        <h1 className="p-lg-5" style={{color: "white"}}>Popular Reviews</h1>
+                        <div>
+                            <div className="d-flex justify-content-center text-center">
+                                {reviews.slice(3, 7).map((review, index) => (
+                                    <div key={index} style={{ color: 'white' }} className="p-lg-5">
+                                        <div className="bold-text justify-content-center text-center">
+                                            {review.song.title}
+                                        </div>
+                                        {review.song.artist}
+                                        <img src={placeHold} height="220px" width="220px" className="p-2" alt={review.title}/>
+                                        <br/>
+                                        {review.title} - {review.user}
+                                        <br/>
+                                        <hr/>
+                                        Rating: {review.rating}/10
+                                        <hr/>
+                                        {review.text}
+                                        <br/><br/>
+                                        <h6 style={{ color: 'gray', fontSize: '15px'}}>
+                                            <button type="button" className="btn-secondary">
+                                                <img src={Heart} width="15" height="15" alt="Heart Logo"  className="d-inline-block"/>
+                                            </button> like review | {review.likes}
+                                        </h6>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <article className="Gradient">
+
+                </article>
+                <article className="bg-dark">
+                    <div className="d-flex justify-content-center text-center">
+                        <h5 className="p-4 bold-text" style={{color: "lightsteelblue"}}>About</h5>
+                        <h5 className="p-4 bold-text" style={{color: "lightsteelblue"}}>Help</h5>
+                        <h5 className="p-4 bold-text" style={{color: "lightsteelblue"}}>FAQ</h5>
+                        <h5 className="p-4 bold-text" style={{color: "lightsteelblue"}}>Top 10</h5>
+                        <h5 className="p-4 bold-text" style={{color: "lightsteelblue"}}>Socials</h5>
+                    </div>
+                </article>
             </div>
-          </article>
-        </div>
+        </Router>
     )
   }
 }
