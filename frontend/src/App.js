@@ -1,12 +1,14 @@
 import './App.css';
 import {Component, useState } from "react";
-
+import {BrowserRouter as Router, Link, Route, Routes, Switch} from 'react-router-dom';
 
 //Navigation
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import {NavDropdown} from "react-bootstrap";
+
+import Navbard from './components/Navbar'
 
 //icons
 import Radio from './icons/radio-solid.svg'
@@ -16,7 +18,7 @@ import Heart from './icons/heart-solid.svg'
 import placeHold from './images/placeholder-image-dark.jpg'
 
 //
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+
 
 //
 import Playlist from './Playlist';
@@ -65,44 +67,9 @@ class App extends Component {
     const { songs } = this.state;
     const { reviews } = this.state;
     return (
-        <Router>
             <div>
                 <div>
-                    <Navbar expand="lg" className="navbar navbar-dark bg-dark">
-                        <Container>
-                            <Navbar.Brand href="#home" className="navbar-brand mb-0 h1">
-                                {/*icon: https://fontawesome.com/icons/radio?f=classic&s=solid
-                    display: https://blog.logrocket.com/how-to-use-svgs-react/#using-img-tag
-                    how to use comments in render: https://wesbos.com/react-jsx-comments*/}
-                                <img src={Radio} width="40" height="40" alt="Radio Logo"  className="d-inline-block align-top"/>{' '}
-                                THUMP
-                            </Navbar.Brand>
-                            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                            <Navbar.Collapse id="basic-navbar-nav">
-                                <Nav className="me-auto">
-                                    <Nav.Link href="#home">Artist</Nav.Link>
-
-                                    <Nav.Link href="#link">Songs</Nav.Link>
-
-                                    <NavDropdown title="Playlists" id="basic-nav-dropdown">
-                                        <NavDropdown.Item href="#playlists">My Playlists</NavDropdown.Item>
-                                        <NavDropdown.Item href="#action/3.2">Saved Playlists</NavDropdown.Item>
-                                        <NavDropdown.Item href="#action/3.3">Featured Playlists</NavDropdown.Item>
-                                        <NavDropdown.Divider />
-                                        <NavDropdown.Item href="#action/3.4">Create Playlist</NavDropdown.Item>
-                                    </NavDropdown>
-                                </Nav>
-                                <Nav className="justify-content-end">
-                                    <Nav.Link href="#link">Sign Up</Nav.Link>
-                                    <Nav.Link href="#link">Log in</Nav.Link>
-                                </Nav>
-                            </Navbar.Collapse>
-                        </Container>
-                    </Navbar>
-                    {/* Routes */}
-                    <Switch>
-                        <Route path="/playlists" component={Playlist} />
-                    </Switch>
+                    <Navbard></Navbard>
                 </div>
                 <div className="d-flex justify-content-center Gradient">
                     <div id="image-container"></div>
@@ -182,12 +149,12 @@ class App extends Component {
                     </div>
                 </article>
             </div>
-        </Router>
     )
   }
 }
 
 /*
+
 
 <img src={Heart} width="15" height="15" alt="Heart Logo"  className="d-inline-block"/>
 ///
