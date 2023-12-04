@@ -1,9 +1,10 @@
 import './App.css';
-import {Component, useState } from "react";
+import {Component, useState} from "react";
 import {Link, Route, Router, useNavigate} from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 
 import Navbard from './components/Navbar'
+
 import Login from './Login'
 import { logout } from './services/apiService';
 //icons
@@ -14,7 +15,6 @@ import placeHold from './images/placeholder-image-dark.jpg'
 import Search from "./Search";
 
 //
-
 
 class App extends Component {
 
@@ -35,7 +35,7 @@ class App extends Component {
   }
 
     handleLoginSuccess = () => {
-        this.setState({ isAuthenticated: true }, () => {
+        this.setState({  isAuthenticated: true }, () => {
             // Navigate to the intended page after successful login
             this.navigate(this.state.intendedPage);
         });
@@ -189,11 +189,11 @@ class App extends Component {
 
     )
   }
-    navigate = (path) => {
+    navigate = () => {
         // Use react-router-dom's useNavigate to navigate programmatically
         // You can replace this with history.push('/path') if you are using useHistory hook
         const navigate = this.props.navigate || useNavigate();
-        navigate(path);
+        navigate('/');
     };
 }
 

@@ -1,14 +1,33 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { login } from './services/apiService';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar'
 
-function Login(props) {
+async function loginUser(credentials) {
+    return fetch('http://localhost:8080/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credentials)
+    })
+        .then(data => data.json())
+}
+function Login( { setToken }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async e => {
+        e.preventDefault();
+        const token = await loginUser({
+            username,
+            password
+        });
+        setToken(token);
+    }
+    {/* const handleSubmit = (event) => {
         event.preventDefault();
         login(username, password)
             .then(() => {
@@ -19,7 +38,8 @@ function Login(props) {
             .catch(error => {
                 console.error('Login failed:', error);
             });
-    };
+    };*/}
+
 
 
     return (
@@ -28,7 +48,7 @@ function Login(props) {
             {/* Get similar margins to the To Do List */}
             <div className="col-md-6 col-sm-10 mt-4 mx-auto p-0">
                 <h1 className="p-2 text-center " style={{color: "white"}}>Login</h1>
-                <form className="p-2 text-center " onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className="p-2 text-center " >
                     <hr style={{color: "lightblue"}}/>
                     <input type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" />
                     <br/><br/>
@@ -81,6 +101,10 @@ function Login(props) {
             </div>
         </div>
     );
+}
+
+Login.propTypes = {
+    setToken: PropTypes.func.isRequired
 }
 
 export default Login;
