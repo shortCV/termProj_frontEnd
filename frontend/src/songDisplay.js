@@ -1,56 +1,49 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from './components/Navbar'
 import { Link, useLocation } from 'react-router-dom';
+import placeHold from './images/placeholder-image-dark.jpg'
+import { CDBRating, CDBContainer } from 'cdbreact';
 
+
+//rating: https://www.devwares.com/docs/contrast/react/components/rating/
 const SongDisplay = () => {
-
-    const [songs, setSongs] = useState([]);
     const location = useLocation();
-
-    useEffect(() => {
-        const fetchSongs = async () => {
-            try {
-                const response = await fetch("http://127.0.0.1:8000/api/get_songs/");
-                const data = await response.json();
-                setSongs(data.songs);
-            } catch (error) {
-                console.error("Something went wrong with fetching songs:", error);
-            }
-        };
-
-        fetchSongs();
-    }, []);
-
+    const songs = new URLSearchParams(location.search).get("songs");
     return(
         <div>
             <Navbar/>
-            <div className="Gradient-less ">
-                <h1 className="p-4 text-center " style={{color: "white"}}>Song Name</h1>
-                <hr style={{color: "lightblue"}}/>
-            </div>
-            <div className="Gradient" >
-                <br/><br/><br/>
-                <form>
-                    <div className="position-absolute start-50 translate-middle">
-                        <h4  style={{color: "white"}}>Playlist Name</h4>
-                        <input type="text" className="form-control p-2" name="" placeholder="playlist title" />
-                        <div>
-                            <br/>
-                            <ul className="p-2 text-center list-group-flush " style={{ color: "white", maxHeight: "300px", overflowY: "auto"  }}>
-                                {songs.map((song) => (
-                                    <li className="list-group-item list-group-item-action list-group-item-dark" key={song.title}>{song.title} by {song.artist.join(', ')}</li>
-                                ))}
-                            </ul>
-                            <div className="col-md-12 text-center p-2">
-                                <Link to={`/`}>
-                                    <button className="btn btn-primary">
-                                        Create
-                                    </button>
-                                </Link>
-                            </div>
-                        </div>
+            <div className="Gradient ">
+                <div className="p-4 d-flex justify-content-center" >
+                    <img src={placeHold} height="370px" width="370px" className="p-2" alt="artist image"/>
+                    <div>
+                        <h1 className="p-2" style={{color: "white"}}>{songs}</h1>
+                        <h4 className="p-2" style={{color: "lightblue"}}>Artists Names</h4>
+                        <h4 className="p-2" style={{color: "lightblue"}}>Details</h4>
+                        <h4 className="p-2" style={{color: "lightblue"}}>Details</h4>
+                        <h4 className="p-2" style={{color: "lightblue"}}>Details</h4>
                     </div>
-                </form>
+                </div>
+                <hr style={{color: "white"}}/>
+            </div>
+            <div className="Gradient p-4" >
+                <div className="p-2 ">
+                    <h1  style={{color: "white"}}> Review</h1>
+                    <div className="p d-flex">
+                        <input type="text" className="form-control  w-25" name="" placeholder="Review title " />
+                        <CDBContainer>
+                            <CDBRating feedback />
+                        </CDBContainer>
+                    </div>
+                    <br/>
+                    <textarea className="form-control p-2" rows="3" name="" placeholder="Write your review" />
+                    <div className="col-md-12 text-end p-2">
+                        <Link to={`/`}>
+                            <button className="btn btn-primary">
+                                Submit
+                            </button>
+                        </Link>
+                    </div>
+                </div>
             </div>
 
             <div className="bg-dark">

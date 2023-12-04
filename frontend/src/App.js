@@ -210,11 +210,26 @@ class App extends Component {
                                         <hr/>
                                         <ul className="list-group list-group-flush list-group-item-action" style={{ color: 'darkgray' }}>
                                             {playlist.songs.slice(0,3).map((songs, songIndex) => (
-                                                <li className="list-group-item list-group-item-action list-group-item-dark" key={songIndex}>{songs}</li>
+                                                <Link to={`song_display?songs=${encodeURIComponent(songs)}`} key={songIndex} className="list-group-item list-group-item-action list-group-item-dark">
+                                                    {songs}
+                                                </Link>
                                             ))}
                                         </ul>
                                     </div>
                                 ))}
+                                {/*import { Link } from 'react-router-dom';
+
+// ...
+
+<div>
+    <ul className="list-group list-group-flush list-group-item-action" style={{ color: 'darkgray' }}>
+        {playlist.songs.slice(0, 3).map((song, songIndex) => (
+            <Link to={`/song_display/${encodeURIComponent(song)}`} key={songIndex} className="list-group-item list-group-item-action list-group-item-dark">
+                {song}
+            </Link>
+        ))}
+    </ul>
+</div>*/}
                             </div>
                         </div>
                     </div>
