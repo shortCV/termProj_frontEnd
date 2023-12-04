@@ -14,19 +14,11 @@ async function loginUser(credentials) {
     })
         .then(data => data.json())
 }
-function Login( { setToken }) {
+function Login(  props ) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = async e => {
-        e.preventDefault();
-        const token = await loginUser({
-            username,
-            password
-        });
-        setToken(token);
-    }
     {/* const handleSubmit = (event) => {
         event.preventDefault();
         login(username, password)
@@ -39,7 +31,18 @@ function Login( { setToken }) {
                 console.error('Login failed:', error);
             });
     };*/}
-
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        login(username, password)
+            .then(() => {
+                props.onLoginSuccess(); // Set authentication status in parent component
+                // Redirect to the intended page after successful login
+                navigate(props.intendedPage || '/');
+            })
+            .catch(error => {
+                console.error('Login failed:', error);
+            });
+    };
 
 
     return (
