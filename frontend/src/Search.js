@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar'
-import placeHold from "./images/placeholder-image-dark.jpg";
+
 
 const Search = () => {
+
     const location = useLocation();
     const searchQuery = new URLSearchParams(location.search).get("q");
     const [filteredSongs, setFilteredSongs] = useState([]);
@@ -51,7 +52,7 @@ const Search = () => {
 
     return (
         <div>
-            <Navbar />
+            <Navbar/>
             <div className="Gradient-less">
                 <h1 className="p-2 text-center " style={{color: "white"}}>Search</h1>
                 <h4 className="p-4 text-center " style={{color: "white"}}>Results for:</h4>

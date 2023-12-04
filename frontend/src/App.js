@@ -1,14 +1,17 @@
 import './App.css';
 import {Component, useState } from "react";
-import {Link, useNavigate} from 'react-router-dom';
+import {Link, Route, Router, useNavigate} from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
 
 import Navbard from './components/Navbar'
-import Search from './Search'
+import Login from './Login'
+import { logout } from './services/apiService';
 //icons
 import Heart from './icons/heart-solid.svg'
 
 //
 import placeHold from './images/placeholder-image-dark.jpg'
+import Search from "./Search";
 
 //
 
@@ -25,9 +28,25 @@ class App extends Component {
         songs: [],
         reviews: [],
         searchInput: "",
+        isAuthenticated: false,
+        loading: true,
+        intendedPage: '/',
     }
   }
 
+    handleLoginSuccess = () => {
+        this.setState({ isAuthenticated: true }, () => {
+            // Navigate to the intended page after successful login
+            this.navigate(this.state.intendedPage);
+        });
+    };
+
+    handleLogout = () => {
+        // Call API service to logout
+        logout().then(() => {
+            this.setState({ isAuthenticated: false });
+        });
+    };
 
   componentDidMount() {
     fetch("http://127.0.0.1:8000/api/get_songs/")
@@ -53,7 +72,16 @@ class App extends Component {
         .catch(error => {
           console.error("Error fetching reviews:", error);
         });
+      this.setState({ loading: false });
+      fetch('http://127.0.01:8000/authInto/')
+          .then(response => {
+              if(!response.ok){
+                  this.setState({loading:false, isAuthenticated: true});
+                  console.log("Woah, you did it", this.state.loading);
+              }
+          })
   }
+
 
   // This is called automatically
   render() {
@@ -61,11 +89,16 @@ class App extends Component {
       const { reviews } = this.state;
       const { searchInput } = this.state;
       // State to manage the search input
+      const { isAuthenticated, loading } = this.state;
 
+      if (loading) {
+          return <div>Loading...</div>;
+      }
     return (
+
             <div>
                 <div>
-                    <Navbard></Navbard>
+                    <Navbard isAuthenticated={this.state.isAuthenticated} onLogout={this.handleLogout}></Navbard>
                 </div>
                 <div className="d-flex justify-content-center Gradient">
                     <div id="image-container"></div>
@@ -75,7 +108,7 @@ class App extends Component {
                         <div className="col-md-12 text-center p-2">
                             <Link to={`/search?q=${searchInput}`}>
                                 <button className="btn btn-primary">
-                                Search
+                                    Search
                                 </button>
                             </Link>
                         </div>
@@ -89,6 +122,7 @@ class App extends Component {
                         {/* Display Songs */}
                         <div>
                             <div className="d-flex justify-content-center text-center">
+
                                 {songs.slice(23, 27).map((song, index) => (
                                     <div key={index} style={{ color: 'white' }} className="p-lg-5">
                                         {song.title}
@@ -123,11 +157,16 @@ class App extends Component {
                                         <hr/>
                                         {review.text}
                                         <br/><br/>
-                                        <h6 style={{ color: 'gray', fontSize: '15px'}}>
-                                            <button type="button" className="btn-secondary">
-                                                <img src={Heart} width="15" height="15" alt="Heart Logo"  className="d-inline-block"/>
-                                            </button> like review | {review.likes}
-                                        </h6>
+                                        {isAuthenticated ? (
+                                            <h6 style={{ color: 'gray', fontSize: '15px'}}>
+                                                <button type="button" className="btn-secondary">
+                                                    <img src={Heart} width="15" height="15" alt="Heart Logo"  className="d-inline-block"/>
+                                                </button> like review | {review.likes}
+                                            </h6>
+                                        ):(
+                                            <h6 style={{ color: 'gray', fontSize: '15px'}}>like review | {review.likes}</h6>
+                                        )}
+
                                     </div>
                                 ))}
                             </div>
@@ -147,8 +186,15 @@ class App extends Component {
                     </div>
                 </article>
             </div>
+
     )
   }
+    navigate = (path) => {
+        // Use react-router-dom's useNavigate to navigate programmatically
+        // You can replace this with history.push('/path') if you are using useHistory hook
+        const navigate = this.props.navigate || useNavigate();
+        navigate(path);
+    };
 }
 
 /*

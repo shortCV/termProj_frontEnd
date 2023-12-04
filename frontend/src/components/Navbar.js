@@ -5,7 +5,7 @@ import Nav from "react-bootstrap/Nav";
 import {NavDropdown} from "react-bootstrap";
 import Navbar from 'react-bootstrap/Navbar';
 
-const Navbard = () => {
+const Navbard = ({ isAuthenticated, onLogout }) => {
     return (
         <Navbar expand="lg" className="navbar navbar-dark bg-dark">
             <Container>
@@ -24,19 +24,30 @@ const Navbard = () => {
                         <Nav.Link href="/">
                             Songs
                         </Nav.Link>
-
-                        <NavDropdown title="Playlists" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="playlists" >My Playlists</NavDropdown.Item>
-                            <NavDropdown.Item href="/">Saved Playlists</NavDropdown.Item>
-                            <NavDropdown.Item href="/">Featured Playlists</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="/">Create Playlist</NavDropdown.Item>
-                        </NavDropdown>
+                        {isAuthenticated ? (
+                            <NavDropdown title="Playlists" id="basic-nav-dropdown">
+                                <NavDropdown.Item href="playlists" >My Playlists</NavDropdown.Item>
+                                <NavDropdown.Item href="/">Saved Playlists</NavDropdown.Item>
+                                <NavDropdown.Item href="/">Featured Playlists</NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item href="/">Create Playlist</NavDropdown.Item>
+                            </NavDropdown>
+                        ):(
+                            <NavDropdown title="Playlists" id="basic-nav-dropdown">
+                                <NavDropdown.Item href="/">Featured Playlists</NavDropdown.Item>
+                            </NavDropdown>
+                        )}
                     </Nav>
-                    <Nav className="justify-content-end">
-                        <Nav.Link href="/">Sign Up</Nav.Link>
-                        <Nav.Link href="/">Log in</Nav.Link>
-                    </Nav>
+                    {isAuthenticated ? (
+                        <Nav className="justify-content-end">
+                            <Nav.Link onClick={onLogout}>Logout</Nav.Link>
+                        </Nav>
+                    ) : (
+                        <Nav className="justify-content-end">
+                            <Nav.Link href="/">Sign Up</Nav.Link>
+                            <Nav.Link href="login">Log in</Nav.Link>
+                        </Nav>
+                    )}
                 </Navbar.Collapse>
             </Container>
         </Navbar>

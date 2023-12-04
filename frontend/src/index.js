@@ -10,7 +10,14 @@ import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
+import Login from "./Login";
 
+const handleLoginSuccess = () => {
+    this.setState({ isAuthenticated: true }, () => {
+        // Navigate to the intended page after successful login
+        this.navigate("/");
+    });
+};
 //helped figure out how to use different pages: https://www.youtube.com/watch?v=o05ZP6_JQqE
 
 const router = createBrowserRouter([
@@ -25,6 +32,10 @@ const router = createBrowserRouter([
     {
         path: "search",
         element: <Search/>
+    },
+    {
+        path: "login",
+        element: <Login onLoginSuccess={handleLoginSuccess}/>
     },
 ]);
 
