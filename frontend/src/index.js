@@ -3,13 +3,21 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import Playlist from './Playlist'
+import Search from './Search'
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
+import Login from "./Login";
 
+const handleLoginSuccess = () => {
+    this.setState({ isAuthenticated: true }, () => {
+        // Navigate to the intended page after successful login
+        this.navigate("/");
+    });
+};
 //helped figure out how to use different pages: https://www.youtube.com/watch?v=o05ZP6_JQqE
 
 const router = createBrowserRouter([
@@ -20,6 +28,14 @@ const router = createBrowserRouter([
     {
         path: "playlists",
         element: <Playlist/>
+    },
+    {
+        path: "search",
+        element: <Search/>
+    },
+    {
+        path: "login",
+        element: <Login onLoginSuccess={handleLoginSuccess}/>
     },
 ]);
 

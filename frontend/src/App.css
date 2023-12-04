@@ -43,6 +43,11 @@ h1 {
   background: rgb(9,11,10,1);
   background: radial-gradient(circle,  rgba(9,11,10,1) 60%, rgb(17, 48, 63) 100%);
 }
+.Gradient-less{
+  height: 300px;
+  background: rgb(9,11,10,1);
+  background: radial-gradient(circle,  rgba(9,11,10,1) 60%, rgb(17, 48, 63) 100%);
+}
 
 .search{
   border: 1px solid #ccc;

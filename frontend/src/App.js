@@ -1,99 +1,152 @@
 import './App.css';
-import {Component, useState } from "react";
-import {BrowserRouter as Router, Link, Route, Routes, Switch} from 'react-router-dom';
-
-//Navigation
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import Container from 'react-bootstrap/Container';
-import {NavDropdown} from "react-bootstrap";
+import {Component, useState} from "react";
+import {Link, Route, Router, useNavigate} from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
 
 import Navbard from './components/Navbar'
 
+import Login from './Login'
+import { logout } from './services/apiService';
 //icons
-import Radio from './icons/radio-solid.svg'
 import Heart from './icons/heart-solid.svg'
 
 //
 import placeHold from './images/placeholder-image-dark.jpg'
+import playlist from "./Playlist";
 
 //
-
-
-//
-import Playlist from './Playlist';
-//import NotFound from './NotFound';
 
 class App extends Component {
+
+
   // Constructor method is called when a new instance is created
   constructor(props) {
     super(props);
     this.state = {
-      myText: 'this is something that is stored in my application state',
-      disabled: false,
-      songs: [],
-      reviews: [],
+        myText: 'this is something that is stored in my application state',
+        disabled: false,
+        songs: [],
+        reviews: [],
+        playlists: [],
+        searchInput: "",
+        isAuthenticated: false,
+        loading: true,
+        intendedPage: '/',
     }
   }
 
-  componentDidMount() {
-    fetch("http://127.0.0.1:8000/api/get_songs/")
-        .then(response => response.json())
-        .then(data => {
-          this.setState({ songs: data.songs });
-        })
-        .catch(error => {
-          console.error("Error fetching songs:", error);
+    handleLoginSuccess = () => {
+        this.setState({  isAuthenticated: true }, () => {
+            // Navigate to the intended page after successful login
+            this.navigate(this.state.intendedPage);
         });
+    };
 
-    fetch("http://127.0.0.1:8000/api/get_reviews/")
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`Something has gone wrong. Status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then(data => {
-          console.log("Reviews data:", data);
-          this.setState({ reviews: data.reviews });
-        })
-        .catch(error => {
-          console.error("Error fetching reviews:", error);
+    handleLogout = () => {
+        // Call API service to logout
+        logout().then(() => {
+            this.setState({ isAuthenticated: false });
         });
+    };
+
+  componentDidMount() {
+        fetch("http://127.0.0.1:8000/api/get_songs/")
+            .then(response => response.json())
+            .then(data => {
+              this.setState({ songs: data.songs });
+            })
+            .catch(error => {
+              console.error("Error fetching songs:", error);
+            });
+
+        fetch("http://127.0.0.1:8000/api/get_reviews/")
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(`Something has gone wrong. Status: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log("Reviews data:", data);
+              this.setState({ reviews: data.reviews });
+            })
+            .catch(error => {
+              console.error("Error fetching reviews:", error);
+            });
+
+        fetch("http://127.0.0.1:8000/api/get_playlist/")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Something has gone wrong. Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Playlist data:", data);
+                this.setState({ playlists: data.playlists });
+            })
+            .catch(error => {
+                console.error("Error fetching playlists:", error);
+            });
+
+        this.setState({ loading: false });
+        fetch('http://127.0.01:8000/authInto/')
+            .then(response => {
+                 if(!response.ok){
+                   this.setState({loading:false, isAuthenticated: true});
+                   console.log("Woah, you did it", this.state.loading);
+                }
+             })
   }
+
 
   // This is called automatically
   render() {
-    const { songs } = this.state;
-    const { reviews } = this.state;
+      const { songs } = this.state;
+      const { reviews } = this.state;
+      const { searchInput } = this.state;
+      const { playlists } = this.state;
+      // State to manage the search input
+      const { isAuthenticated, loading } = this.state;
+
+      if (loading) {
+          return <div>Loading...</div>;
+      }
+
     return (
+
             <div>
                 <div>
-                    <Navbard></Navbard>
+                    <Navbard isAuthenticated={this.state.isAuthenticated} onLogout={this.handleLogout}></Navbard>
                 </div>
                 <div className="d-flex justify-content-center Gradient">
                     <div id="image-container"></div>
                     <div className="position-absolute top-50 start-50 translate-middle ">
                         <h1 className="text-center " style={{color: "white"}}>What Have You Been Listening To? </h1>
-                        <input type="text" className="search" name="" placeholder="search song, album, artist..." />
+                        <input type="text" className="search" name="" placeholder="search song, album, artist..." value={searchInput} onChange={(e) => this.setState({ searchInput: e.target.value })} />
                         <div className="col-md-12 text-center p-2">
-                            <button className="btn btn-primary" onClick={this.handleSearch}>
-                                Search
-                            </button>
+                            <Link to={`/search?q=${searchInput}`}>
+                                <button className="btn btn-primary">
+                                    Search
+                                </button>
+                            </Link>
                         </div>
 
                     </div>
                 </div>
-                <article className="Gradient">
+                <div className="Gradient">
                     <div>
                         <br/>
                         <h1 className="p-lg-5" style={{color: "white"}}>New Releases</h1>
                         {/* Display Songs */}
                         <div>
                             <div className="d-flex justify-content-center text-center">
+
                                 {songs.slice(23, 27).map((song, index) => (
                                     <div key={index} style={{ color: 'white' }} className="p-lg-5">
-                                        {song.title}
+                                        <div className="bold-text">
+                                            {song.title}
+                                        </div>
                                         <br/>
                                         <img src={placeHold} height="220px" width="220px" className="p-2" alt={song.title}/>
                                         <br/>
@@ -103,8 +156,8 @@ class App extends Component {
                             </div>
                         </div>
                     </div>
-                </article>
-                <article className="Gradient">
+                </div>
+                <div className="Gradient">
                     <div>
                         <br/>
                         <h1 className="p-lg-5" style={{color: "white"}}>Popular Reviews</h1>
@@ -125,20 +178,52 @@ class App extends Component {
                                         <hr/>
                                         {review.text}
                                         <br/><br/>
-                                        <h6 style={{ color: 'gray', fontSize: '15px'}}>
-                                            <button type="button" className="btn-secondary">
-                                                <img src={Heart} width="15" height="15" alt="Heart Logo"  className="d-inline-block"/>
-                                            </button> like review | {review.likes}
-                                        </h6>
+                                        {isAuthenticated ? (
+                                            <h6 style={{ color: 'gray', fontSize: '15px'}}>
+                                                <button type="button" className="btn-secondary">
+                                                    <img src={Heart} width="15" height="15" alt="Heart Logo"  className="d-inline-block"/>
+                                                </button> like review | {review.likes}
+                                            </h6>
+                                        ):(
+                                            <h6 style={{ color: 'gray', fontSize: '15px'}}>like review | {review.likes}</h6>
+                                        )}
+
                                     </div>
                                 ))}
                             </div>
                         </div>
                     </div>
-                </article>
-                <article className="Gradient">
-
-                </article>
+                </div>
+                <div className="Gradient">
+                    <div>
+                        <br/><br/> <br/><br/> <br/><br/> <br/><br/>
+                        <h1 className="p-lg-5" style={{color: "white"}}><br/>Popular Playlists</h1>
+                        <div>
+                            <div className="d-flex justify-content-center text-center">
+                                {playlists.map((playlist, index) =>(
+                                    <div key={index}  className="p-lg-5">
+                                        <div className="bold-text" style={{ color: 'white' }}>
+                                            {playlist.title}
+                                        </div>
+                                        <hr style={{ color: 'white' }}/>
+                                        <img src={placeHold} height="220px" width="220px" className="p-2" alt={playlist.title}/>
+                                        <hr/>
+                                        <ul className="list-group list-group-flush list-group-item-action" style={{ color: 'darkgray' }}>
+                                            {playlist.songs.slice(0,3).map((songs, songIndex) => (
+                                                <li className="list-group-item list-group-item-action list-group-item-dark" key={songIndex}>{songs}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="Gradient">
+                    <div>
+                        <br/><br/> <br/><br/> <br/><br/> <br/><br/><br/>
+                    </div>
+                </div>
                 <article className="bg-dark">
                     <div className="d-flex justify-content-center text-center">
                         <h5 className="p-4 bold-text" style={{color: "lightsteelblue"}}>About</h5>
@@ -149,8 +234,15 @@ class App extends Component {
                     </div>
                 </article>
             </div>
+
     )
   }
+    navigate = () => {
+        // Use react-router-dom's useNavigate to navigate programmatically
+        // You can replace this with history.push('/path') if you are using useHistory hook
+        const navigate = this.props.navigate || useNavigate();
+        navigate('/');
+    };
 }
 
 /*
