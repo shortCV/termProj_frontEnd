@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from './components/Navbar'
 import { Link, useLocation } from 'react-router-dom';
 
-const CreatePlay = () => {
+const SongDisplay = () => {
 
     const [songs, setSongs] = useState([]);
     const location = useLocation();
@@ -25,7 +25,7 @@ const CreatePlay = () => {
         <div>
             <Navbar/>
             <div className="Gradient-less ">
-                <h1 className="p-4 text-center " style={{color: "white"}}>Create Playlist</h1>
+                <h1 className="p-4 text-center " style={{color: "white"}}>Song Name</h1>
                 <hr style={{color: "lightblue"}}/>
             </div>
             <div className="Gradient" >
@@ -65,4 +65,4 @@ const CreatePlay = () => {
         </div>
     )
 }
-export default CreatePlay;
+export default SongDisplay;

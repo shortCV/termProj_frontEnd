@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import Playlist from './Playlist'
 import Search from './Search'
+import CreatePlay from './CreatePlay'
+import SongDisplay from "./songDisplay";
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 import {
@@ -36,6 +38,14 @@ const router = createBrowserRouter([
     {
         path: "login",
         element: <Login onLoginSuccess={handleLoginSuccess}/>
+    },
+    {
+        path: "create",
+        element: <CreatePlay/>
+    },
+    {
+        path: "song_display",
+        element: <SongDisplay/>
     },
 ]);
 

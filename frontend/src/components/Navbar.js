@@ -30,7 +30,7 @@ const Navbard = ({ isAuthenticated, onLogout }) => {
                                 <NavDropdown.Item href="/">Saved Playlists</NavDropdown.Item>
                                 <NavDropdown.Item href="/">Featured Playlists</NavDropdown.Item>
                                 <NavDropdown.Divider />
-                                <NavDropdown.Item href="/">Create Playlist</NavDropdown.Item>
+                                <NavDropdown.Item href="create">Create Playlist</NavDropdown.Item>
                             </NavDropdown>
                         ):(
                             <NavDropdown title="Playlists" id="basic-nav-dropdown">
