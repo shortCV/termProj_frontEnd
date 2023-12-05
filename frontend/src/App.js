@@ -4,6 +4,7 @@ import {Link, Route, Router, useNavigate} from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 
 import Navbard from './components/Navbar'
+import LikeButton from './components/Like'
 
 import Login from './Login'
 import { logout } from './services/apiService';
@@ -109,6 +110,9 @@ class App extends Component {
       // State to manage the search input
       const { isAuthenticated, loading } = this.state;
 
+      const handleReviewLike = (reviewId, isLiked) => {
+      };
+
       if (loading) {
           return <div>Loading...</div>;
       }
@@ -178,15 +182,7 @@ class App extends Component {
                                         <hr/>
                                         {review.text}
                                         <br/><br/>
-                                        {isAuthenticated ? (
-                                            <h6 style={{ color: 'gray', fontSize: '15px'}}>
-                                                <button type="button" className="btn-secondary">
-                                                    <img src={Heart} width="15" height="15" alt="Heart Logo"  className="d-inline-block"/>
-                                                </button> like review | {review.likes}
-                                            </h6>
-                                        ):(
-                                            <h6 style={{ color: 'gray', fontSize: '15px'}}>like review | {review.likes}</h6>
-                                        )}
+                                        <LikeButton reviewId={review.id} initialLikes={review.likes} isAuthenticated={isAuthenticated} onLike={handleReviewLike} />
 
                                     </div>
                                 ))}

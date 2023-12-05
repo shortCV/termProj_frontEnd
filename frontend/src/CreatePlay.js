@@ -6,6 +6,7 @@ const CreatePlay = () => {
 
     const [songs, setSongs] = useState([]);
     const location = useLocation();
+    const [playlistTitle, setPlaylistTitle] = useState(''); // State to track the playlist title
 
     useEffect(() => {
         const fetchSongs = async () => {
@@ -21,6 +22,10 @@ const CreatePlay = () => {
         fetchSongs();
     }, []);
 
+    const handleTitleChange = (event) => {
+        setPlaylistTitle(event.target.value);
+    };
+
     return(
         <div>
             <Navbar/>
@@ -33,20 +38,33 @@ const CreatePlay = () => {
                 <form>
                     <div className="position-absolute start-50 translate-middle">
                         <h4  style={{color: "white"}}>Playlist Name</h4>
-                        <input type="text" className="form-control p-2" name="" placeholder="playlist title" />
+                        <input
+                            type="text"
+                            className="form-control p-2"
+                            name="playTitle"
+                            placeholder="playlist title"
+                            value={playlistTitle}
+                            onChange={handleTitleChange} // Call the function on input change
+                        />
                         <div>
                             <br/>
-                            <ul className="p-2 text-center list-group-flush " style={{ color: "white", maxHeight: "300px", overflowY: "auto"  }}>
+                            <select className="form-select" aria-label="Default select example" multiple size="10">
                                 {songs.map((song) => (
-                                    <li className="list-group-item list-group-item-action list-group-item-dark" key={song.title}>{song.title} by {song.artist.join(', ')}</li>
+                                    <option value={song} className="list-group-item list-group-item-action list-group-item-dark" key={song.title}>{song.title} by {song.artist.join(', ')}</option>
                                 ))}
-                            </ul>
+                            </select>
                             <div className="col-md-12 text-center p-2">
-                                <Link to={`/`}>
-                                    <button className="btn btn-primary">
+                                {playlistTitle.trim() ? (
+                                    <Link to={`/`}>
+                                        <button className="btn btn-primary">
+                                            Create
+                                        </button>
+                                    </Link>
+                                ) : (
+                                    <button className="btn btn-primary" disabled>
                                         Create
                                     </button>
-                                </Link>
+                                )}
                             </div>
                         </div>
                     </div>
