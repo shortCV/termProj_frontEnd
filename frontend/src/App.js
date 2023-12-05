@@ -5,8 +5,9 @@ import Navbard from './components/Navbar'
 import LikeButton from './components/Like'
 import { logout } from './services/apiService';
 import placeHold from './components/images/placeholder-image-dark.jpg'
+import { Tooltip } from 'react-tooltip'
 
-
+// hover element: https://react-tooltip.com/docs/getting-started
 class App extends Component {
 
   // Constructor method is called when a new instance is created
@@ -118,12 +119,13 @@ class App extends Component {
                     <div id="image-container"></div>
                     <div className="position-absolute top-50 start-50 translate-middle ">
                         <h1 className="text-center " style={{color: "white"}}>What Have You Been Listening To? </h1>
-                        <input type="text" className="search container-fluid" name="" placeholder="search song, album, artist..." value={searchInput} onChange={(e) => this.setState({ searchInput: e.target.value })} />
+                        <input type="text" className="search container-fluid" name="search_bar" placeholder="search song, album, artist..." value={searchInput} onChange={(e) => this.setState({ searchInput: e.target.value })} />
                         <div className="col-md-12 text-center p-2">
                             <Link to={`/search?q=${searchInput}`}>
-                                <button className="btn btn-primary">
+                                <button className="btn btn-primary" data-tooltip-id="my-submit" data-tooltip-content="Submit to search" data-tooltip-place="bottom">
                                     Search
                                 </button>
+                                <Tooltip id="my-submit"/>
                             </Link>
                         </div>
 
@@ -175,8 +177,10 @@ class App extends Component {
                                         <hr/>
                                         {review.text}
                                         <br/><br/>
-                                        <LikeButton reviewId={review.id} initialLikes={review.likes} isAuthenticated={isAuthenticated} onLike={handleReviewLike} />
-
+                                        <div data-tooltip-id="my-like" data-tooltip-content="Press to like / unlike" data-tooltip-place="bottom">
+                                            <LikeButton reviewId={review.id} initialLikes={review.likes} isAuthenticated={isAuthenticated} onLike={handleReviewLike} />
+                                            <Tooltip id="my-like"/>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
@@ -197,12 +201,13 @@ class App extends Component {
                                         <hr style={{ color: 'white' }}/>
                                         <img src={placeHold} height="220px" width="220px" className="p-2 img-fluid" alt={playlist.title}/>
                                         <hr/>
-                                        <ul className="list-group list-group-flush list-group-item-action container-fluid" style={{ color: 'darkgray' }}>
+                                        <ul data-tooltip-id="my-song-display" data-tooltip-content="Playlist songs - click on songs" data-tooltip-place="bottom" className="list-group list-group-flush list-group-item-action container-fluid" style={{ color: 'darkgray' }}>
                                             {playlist.songs.slice(0,3).map((songs, songIndex) => (
                                                 <Link to={`song_display?songs=${encodeURIComponent(songs)}`} key={songIndex} className="list-group-item list-group-item-action list-group-item-dark">
                                                     {songs}
                                                 </Link>
                                             ))}
+                                            <Tooltip id="my-song-display"/>
                                         </ul>
                                     </div>
                                 ))}

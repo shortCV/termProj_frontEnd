@@ -7,6 +7,7 @@ import CreatePlay from './components/pages/CreatePlay'
 import SongDisplay from "./components/pages/songDisplay";
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'react-tooltip/dist/react-tooltip.css'
 import {
     createBrowserRouter,
     RouterProvider,
