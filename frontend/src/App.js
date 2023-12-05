@@ -1,23 +1,14 @@
 import './App.css';
-import {Component, useState} from "react";
-import {Link, Route, Router, useNavigate} from 'react-router-dom';
-import ProtectedRoute from './components/ProtectedRoute';
-
+import {Component} from "react";
+import {Link, useNavigate} from 'react-router-dom';
 import Navbard from './components/Navbar'
-
-import Login from './Login'
+import LikeButton from './components/Like'
 import { logout } from './services/apiService';
-//icons
-import Heart from './icons/heart-solid.svg'
+import placeHold from './components/images/placeholder-image-dark.jpg'
+import { Tooltip } from 'react-tooltip'
 
-//
-import placeHold from './images/placeholder-image-dark.jpg'
-import playlist from "./Playlist";
-
-//
-
+// hover element: https://react-tooltip.com/docs/getting-started
 class App extends Component {
-
 
   // Constructor method is called when a new instance is created
   constructor(props) {
@@ -34,13 +25,14 @@ class App extends Component {
         intendedPage: '/',
     }
   }
-
-    handleLoginSuccess = () => {
+  /*
+  * handleLoginSuccess = () => {
         this.setState({  isAuthenticated: true }, () => {
             // Navigate to the intended page after successful login
             this.navigate(this.state.intendedPage);
         });
     };
+    * */
 
     handleLogout = () => {
         // Call API service to logout
@@ -93,6 +85,7 @@ class App extends Component {
         fetch('http://127.0.01:8000/authInto/')
             .then(response => {
                  if(!response.ok){
+                     console.log("this is an error with authentication but I have to show logged in screen")
                    this.setState({loading:false, isAuthenticated: true});
                    console.log("Woah, you did it", this.state.loading);
                 }
@@ -109,8 +102,11 @@ class App extends Component {
       // State to manage the search input
       const { isAuthenticated, loading } = this.state;
 
+      const handleReviewLike = (reviewId, isLiked) => {
+      };
+
       if (loading) {
-          return <div>Loading...</div>;
+          return <div >Loading...</div>;
       }
 
     return (
@@ -123,12 +119,13 @@ class App extends Component {
                     <div id="image-container"></div>
                     <div className="position-absolute top-50 start-50 translate-middle ">
                         <h1 className="text-center " style={{color: "white"}}>What Have You Been Listening To? </h1>
-                        <input type="text" className="search" name="" placeholder="search song, album, artist..." value={searchInput} onChange={(e) => this.setState({ searchInput: e.target.value })} />
+                        <input type="text" className="search container-fluid" name="search_bar" placeholder="search song, album, artist..." value={searchInput} onChange={(e) => this.setState({ searchInput: e.target.value })} />
                         <div className="col-md-12 text-center p-2">
                             <Link to={`/search?q=${searchInput}`}>
-                                <button className="btn btn-primary">
+                                <button className="btn btn-primary" data-tooltip-id="my-submit" data-tooltip-content="Submit to search" data-tooltip-place="bottom">
                                     Search
                                 </button>
+                                <Tooltip id="my-submit"/>
                             </Link>
                         </div>
 
@@ -137,18 +134,20 @@ class App extends Component {
                 <div className="Gradient">
                     <div>
                         <br/>
-                        <h1 className="p-lg-5" style={{color: "white"}}>New Releases</h1>
+                        <h1 className="p-lg-5 container-fluid" style={{color: "white"}}>New Releases</h1>
                         {/* Display Songs */}
                         <div>
-                            <div className="d-flex justify-content-center text-center">
-
+                            <div className="d-flex justify-content-center text-center container-fluid">
                                 {songs.slice(23, 27).map((song, index) => (
                                     <div key={index} style={{ color: 'white' }} className="p-lg-5">
                                         <div className="bold-text">
                                             {song.title}
                                         </div>
                                         <br/>
-                                        <img src={placeHold} height="220px" width="220px" className="p-2" alt={song.title}/>
+                                        <div>
+                                            <img src={placeHold} height="220px" width="100% \9" className="p-2 img-fluid" alt={song.title}/>
+                                        </div>
+
                                         <br/>
                                         by {song.artist.join(', ')}
                                     </div>
@@ -160,16 +159,16 @@ class App extends Component {
                 <div className="Gradient">
                     <div>
                         <br/>
-                        <h1 className="p-lg-5" style={{color: "white"}}>Popular Reviews</h1>
+                        <h1 className="p-lg-5 container-fluid" style={{color: "white"}}>Popular Reviews</h1>
                         <div>
-                            <div className="d-flex justify-content-center text-center">
+                            <div className="d-flex justify-content-center text-center container-fluid">
                                 {reviews.slice(3, 7).map((review, index) => (
                                     <div key={index} style={{ color: 'white' }} className="p-lg-5">
                                         <div className="bold-text justify-content-center text-center">
                                             {review.song.title}
                                         </div>
                                         {review.song.artist}
-                                        <img src={placeHold} height="220px" width="220px" className="p-2" alt={review.title}/>
+                                        <img src={placeHold} height="220px" width="220px" className="p-2 img-fluid" alt={review.title}/>
                                         <br/>
                                         {review.title} - {review.user}
                                         <br/>
@@ -178,16 +177,10 @@ class App extends Component {
                                         <hr/>
                                         {review.text}
                                         <br/><br/>
-                                        {isAuthenticated ? (
-                                            <h6 style={{ color: 'gray', fontSize: '15px'}}>
-                                                <button type="button" className="btn-secondary">
-                                                    <img src={Heart} width="15" height="15" alt="Heart Logo"  className="d-inline-block"/>
-                                                </button> like review | {review.likes}
-                                            </h6>
-                                        ):(
-                                            <h6 style={{ color: 'gray', fontSize: '15px'}}>like review | {review.likes}</h6>
-                                        )}
-
+                                        <div data-tooltip-id="my-like" data-tooltip-content="Press to like / unlike" data-tooltip-place="bottom">
+                                            <LikeButton reviewId={review.id} initialLikes={review.likes} isAuthenticated={isAuthenticated} onLike={handleReviewLike} />
+                                            <Tooltip id="my-like"/>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
@@ -199,19 +192,22 @@ class App extends Component {
                         <br/><br/> <br/><br/> <br/><br/> <br/><br/>
                         <h1 className="p-lg-5" style={{color: "white"}}><br/>Popular Playlists</h1>
                         <div>
-                            <div className="d-flex justify-content-center text-center">
+                            <div className="d-flex justify-content-center text-center container-fluid">
                                 {playlists.map((playlist, index) =>(
                                     <div key={index}  className="p-lg-5">
                                         <div className="bold-text" style={{ color: 'white' }}>
                                             {playlist.title}
                                         </div>
                                         <hr style={{ color: 'white' }}/>
-                                        <img src={placeHold} height="220px" width="220px" className="p-2" alt={playlist.title}/>
+                                        <img src={placeHold} height="220px" width="220px" className="p-2 img-fluid" alt={playlist.title}/>
                                         <hr/>
-                                        <ul className="list-group list-group-flush list-group-item-action" style={{ color: 'darkgray' }}>
+                                        <ul data-tooltip-id="my-song-display" data-tooltip-content="Playlist songs - click on songs" data-tooltip-place="bottom" className="list-group list-group-flush list-group-item-action container-fluid" style={{ color: 'darkgray' }}>
                                             {playlist.songs.slice(0,3).map((songs, songIndex) => (
-                                                <li className="list-group-item list-group-item-action list-group-item-dark" key={songIndex}>{songs}</li>
+                                                <Link to={`song_display?songs=${encodeURIComponent(songs)}`} key={songIndex} className="list-group-item list-group-item-action list-group-item-dark">
+                                                    {songs}
+                                                </Link>
                                             ))}
+                                            <Tooltip id="my-song-display"/>
                                         </ul>
                                     </div>
                                 ))}
@@ -244,35 +240,5 @@ class App extends Component {
         navigate('/');
     };
 }
-
-/*
-
-
-<img src={Heart} width="15" height="15" alt="Heart Logo"  className="d-inline-block"/>
-///
-<MDBCol md="12">
-                <MDBInput hint="Search" type="text" containerClass="active-pink active-pink-2 mt-0 mb-3" />
-              </MDBCol>
-///
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}*/
 
 export default App;

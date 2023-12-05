@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { login } from './services/apiService';
+import { login } from '../../services/apiService';
 import { useNavigate } from 'react-router-dom';
-import Navbar from './components/Navbar'
+import Navbar from '../Navbar'
+import Breadcrumbs from '../Breadcrumbs'
+
 
 async function loginUser(credentials) {
     return fetch('http://localhost:8080/login', {
@@ -19,18 +21,6 @@ function Login(  props ) {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    {/* const handleSubmit = (event) => {
-        event.preventDefault();
-        login(username, password)
-            .then(() => {
-                props.onLoginSuccess(); // Set authentication status in parent component
-                // Redirect to the intended page after successful login
-                navigate(props.intendedPage || '/');
-            })
-            .catch(error => {
-                console.error('Login failed:', error);
-            });
-    };*/}
     const handleSubmit = (event) => {
         event.preventDefault();
         login(username, password)
@@ -44,12 +34,12 @@ function Login(  props ) {
             });
     };
 
-
     return (
         <div className=" Gradient">
             <Navbar ></Navbar>
             {/* Get similar margins to the To Do List */}
             <div className="col-md-6 col-sm-10 mt-4 mx-auto p-0">
+                <Breadcrumbs></Breadcrumbs>
                 <h1 className="p-2 text-center " style={{color: "white"}}>Login</h1>
                 <form onSubmit={handleSubmit} className="p-2 text-center " >
                     <hr style={{color: "lightblue"}}/>
