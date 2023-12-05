@@ -1,16 +1,12 @@
 import './App.css';
 import {Component} from "react";
 import {Link, useNavigate} from 'react-router-dom';
-
 import Navbard from './components/Navbar'
 import LikeButton from './components/Like'
-
 import { logout } from './services/apiService';
+import placeHold from './components/images/placeholder-image-dark.jpg'
 
-//
-import placeHold from './images/placeholder-image-dark.jpg'
 
-//
 class App extends Component {
 
   // Constructor method is called when a new instance is created
@@ -28,13 +24,14 @@ class App extends Component {
         intendedPage: '/',
     }
   }
-
-    handleLoginSuccess = () => {
+  /*
+  * handleLoginSuccess = () => {
         this.setState({  isAuthenticated: true }, () => {
             // Navigate to the intended page after successful login
             this.navigate(this.state.intendedPage);
         });
     };
+    * */
 
     handleLogout = () => {
         // Call API service to logout
@@ -87,6 +84,7 @@ class App extends Component {
         fetch('http://127.0.01:8000/authInto/')
             .then(response => {
                  if(!response.ok){
+                     console.log("this is an error with authentication but I have to show logged in screen")
                    this.setState({loading:false, isAuthenticated: true});
                    console.log("Woah, you did it", this.state.loading);
                 }
@@ -208,19 +206,6 @@ class App extends Component {
                                         </ul>
                                     </div>
                                 ))}
-                                {/*import { Link } from 'react-router-dom';
-
-// ...
-
-<div>
-    <ul className="list-group list-group-flush list-group-item-action" style={{ color: 'darkgray' }}>
-        {playlist.songs.slice(0, 3).map((song, songIndex) => (
-            <Link to={`/song_display/${encodeURIComponent(song)}`} key={songIndex} className="list-group-item list-group-item-action list-group-item-dark">
-                {song}
-            </Link>
-        ))}
-    </ul>
-</div>*/}
                             </div>
                         </div>
                     </div>
@@ -250,35 +235,5 @@ class App extends Component {
         navigate('/');
     };
 }
-
-/*
-
-
-<img src={Heart} width="15" height="15" alt="Heart Logo"  className="d-inline-block"/>
-///
-<MDBCol md="12">
-                <MDBInput hint="Search" type="text" containerClass="active-pink active-pink-2 mt-0 mb-3" />
-              </MDBCol>
-///
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}*/
 
 export default App;

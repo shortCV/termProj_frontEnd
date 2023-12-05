@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from './components/Navbar'
+import Navbar from '../Navbar'
 import { Link, useLocation } from 'react-router-dom';
-import placeHold from './images/placeholder-image-dark.jpg'
+import placeHold from '../images/placeholder-image-dark.jpg'
 import { CDBRating, CDBContainer } from 'cdbreact';
+import Breadcrumbs from '../Breadcrumbs'
 
 
 //rating: https://www.devwares.com/docs/contrast/react/components/rating/
@@ -13,6 +14,9 @@ const SongDisplay = () => {
         <div>
             <Navbar/>
             <div className="Gradient col-sm-12">
+                <div className="p-1" >
+                    <Breadcrumbs></Breadcrumbs>
+                </div>
                 <div className="p-4 d-flex justify-content-center" >
                     <img src={placeHold} height="370px" width="370px" className="p-2" alt="artist image"/>
                     <div>
@@ -31,7 +35,7 @@ const SongDisplay = () => {
 
             </div>
             <div className="Gradient p-4" >
-                <br/>
+                <br/><br/><br/><br/><br/>
                 <hr style={{color: "white"}}/>
                 <div className="p-2 ">
                     <h1  style={{color: "white"}}> Review</h1>

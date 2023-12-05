@@ -60,9 +60,30 @@ h1 {
   padding-left: 100px;
 }
 
+.breadcrumbs{
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+.breadcrumbs > *{
+  display: inline-block;
+  margin-right: 10px;
+}
+.breadcrumbs .crumb:after {
+  content: '>';
+  margin-left: 10px;
+}
+.breadcrumbs .crumb:last-child:after {
+  display: none;
+}
+.breadcrumbs .crumb a {
+  font-weight: bold;
+  color: grey;
+}
+
 /*https://jsfiddle.net/Konrud/owcdfjuh/*/
 #image-container {
-  background: url("images/PMBB_cover.jpeg") left top no-repeat;
+  background: url("components/images/PMBB_cover.jpeg") left top no-repeat;
   box-shadow: 25px 25px 50px 0 rgb(9,11,10,1) inset, -25px -25px 50px 0 rgba(9,11,10,1) inset;
   width: 500px;
   height: 500px;

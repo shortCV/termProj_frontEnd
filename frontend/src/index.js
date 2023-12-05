@@ -2,16 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import Search from './Search'
-import CreatePlay from './CreatePlay'
-import SongDisplay from "./songDisplay";
+import Search from './components/pages/Search'
+import CreatePlay from './components/pages/CreatePlay'
+import SongDisplay from "./components/pages/songDisplay";
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
-import Login from "./Login";
+import Login from "./components/pages/Login";
 
 const handleLoginSuccess = () => {
     this.setState({ isAuthenticated: true }, () => {

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from './components/Navbar'
-import { Link, useLocation } from 'react-router-dom';
+import Navbar from '../Navbar'
+import { Link } from 'react-router-dom';
+import Breadcrumbs from '../Breadcrumbs'
 
 const CreatePlay = () => {
 
     const [songs, setSongs] = useState([]);
-    const location = useLocation();
     const [playlistTitle, setPlaylistTitle] = useState(''); // State to track the playlist title
 
     useEffect(() => {
@@ -30,22 +30,18 @@ const CreatePlay = () => {
         <div>
             <Navbar/>
             <div className="Gradient-less ">
+                <div className="p-1" >
+                    <Breadcrumbs></Breadcrumbs>
+                </div>
                 <h1 className="p-4 text-center " style={{color: "white"}}>Create Playlist</h1>
                 <hr style={{color: "lightblue"}}/>
             </div>
             <div className="Gradient" >
-                <br/><br/><br/>
+                <br/><br/><br/><br/><br/>
                 <form>
                     <div className="position-absolute start-50 translate-middle">
                         <h4  style={{color: "white"}}>Playlist Name</h4>
-                        <input
-                            type="text"
-                            className="form-control p-2"
-                            name="playTitle"
-                            placeholder="playlist title"
-                            value={playlistTitle}
-                            onChange={handleTitleChange} // Call the function on input change
-                        />
+                        <input type="text" className="form-control p-2" name="playTitle" placeholder="playlist title" value={playlistTitle} onChange={handleTitleChange}/>
                         <div>
                             <br/>
                             <select className="form-select" aria-label="Default select example" multiple size="10">
