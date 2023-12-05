@@ -12,20 +12,27 @@ const SongDisplay = () => {
     return(
         <div>
             <Navbar/>
-            <div className="Gradient ">
+            <div className="Gradient col-sm-12">
                 <div className="p-4 d-flex justify-content-center" >
                     <img src={placeHold} height="370px" width="370px" className="p-2" alt="artist image"/>
                     <div>
                         <h1 className="p-2" style={{color: "white"}}>{songs}</h1>
-                        <h4 className="p-2" style={{color: "lightblue"}}>Artists Names</h4>
-                        <h4 className="p-2" style={{color: "lightblue"}}>Details</h4>
-                        <h4 className="p-2" style={{color: "lightblue"}}>Details</h4>
-                        <h4 className="p-2" style={{color: "lightblue"}}>Details</h4>
+                        <h4 className="p-2" style={{color: "lightblue"}}>Taylor Swift</h4>
+                        <h5 className="p-2" style={{color: "gray"}}>Produced by:</h5>
+                        <h5 className="p-2" style={{color: "gray"}}>Written by:</h5>
                     </div>
                 </div>
-                <hr style={{color: "white"}}/>
+                <div className="d-flex justify-content-center">
+                    <h5 className="p-2 col-sm-8 .col-8 .col-md-8 px-4" style={{color: "lightblue"}} >
+                        Extra Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                    </h5>
+                </div>
+
+
             </div>
             <div className="Gradient p-4" >
+                <br/>
+                <hr style={{color: "white"}}/>
                 <div className="p-2 ">
                     <h1  style={{color: "white"}}> Review</h1>
                     <div className="p d-flex">

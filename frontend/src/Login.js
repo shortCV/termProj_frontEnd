@@ -19,18 +19,6 @@ function Login(  props ) {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    {/* const handleSubmit = (event) => {
-        event.preventDefault();
-        login(username, password)
-            .then(() => {
-                props.onLoginSuccess(); // Set authentication status in parent component
-                // Redirect to the intended page after successful login
-                navigate(props.intendedPage || '/');
-            })
-            .catch(error => {
-                console.error('Login failed:', error);
-            });
-    };*/}
     const handleSubmit = (event) => {
         event.preventDefault();
         login(username, password)
@@ -43,7 +31,6 @@ function Login(  props ) {
                 console.error('Login failed:', error);
             });
     };
-
 
     return (
         <div className=" Gradient">

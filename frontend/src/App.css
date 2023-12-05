@@ -35,7 +35,7 @@ h1 {
   font-weight: bold;
 }
 .heart-icon{
-  background: url("icons/heart-solid.svg");
+  background: url("components/icons/heart-solid.svg");
 }
 
 .Gradient{

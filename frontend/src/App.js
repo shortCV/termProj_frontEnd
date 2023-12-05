@@ -1,24 +1,17 @@
 import './App.css';
-import {Component, useState} from "react";
-import {Link, Route, Router, useNavigate} from 'react-router-dom';
-import ProtectedRoute from './components/ProtectedRoute';
+import {Component} from "react";
+import {Link, useNavigate} from 'react-router-dom';
 
 import Navbard from './components/Navbar'
 import LikeButton from './components/Like'
 
-import Login from './Login'
 import { logout } from './services/apiService';
-//icons
-import Heart from './icons/heart-solid.svg'
 
 //
 import placeHold from './images/placeholder-image-dark.jpg'
-import playlist from "./Playlist";
 
 //
-
 class App extends Component {
-
 
   // Constructor method is called when a new instance is created
   constructor(props) {
@@ -114,7 +107,7 @@ class App extends Component {
       };
 
       if (loading) {
-          return <div>Loading...</div>;
+          return <div >Loading...</div>;
       }
 
     return (
@@ -127,7 +120,7 @@ class App extends Component {
                     <div id="image-container"></div>
                     <div className="position-absolute top-50 start-50 translate-middle ">
                         <h1 className="text-center " style={{color: "white"}}>What Have You Been Listening To? </h1>
-                        <input type="text" className="search" name="" placeholder="search song, album, artist..." value={searchInput} onChange={(e) => this.setState({ searchInput: e.target.value })} />
+                        <input type="text" className="search container-fluid" name="" placeholder="search song, album, artist..." value={searchInput} onChange={(e) => this.setState({ searchInput: e.target.value })} />
                         <div className="col-md-12 text-center p-2">
                             <Link to={`/search?q=${searchInput}`}>
                                 <button className="btn btn-primary">
@@ -141,18 +134,20 @@ class App extends Component {
                 <div className="Gradient">
                     <div>
                         <br/>
-                        <h1 className="p-lg-5" style={{color: "white"}}>New Releases</h1>
+                        <h1 className="p-lg-5 container-fluid" style={{color: "white"}}>New Releases</h1>
                         {/* Display Songs */}
                         <div>
-                            <div className="d-flex justify-content-center text-center">
-
+                            <div className="d-flex justify-content-center text-center container-fluid">
                                 {songs.slice(23, 27).map((song, index) => (
                                     <div key={index} style={{ color: 'white' }} className="p-lg-5">
                                         <div className="bold-text">
                                             {song.title}
                                         </div>
                                         <br/>
-                                        <img src={placeHold} height="220px" width="220px" className="p-2" alt={song.title}/>
+                                        <div>
+                                            <img src={placeHold} height="220px" width="100% \9" className="p-2 img-fluid" alt={song.title}/>
+                                        </div>
+
                                         <br/>
                                         by {song.artist.join(', ')}
                                     </div>
@@ -164,16 +159,16 @@ class App extends Component {
                 <div className="Gradient">
                     <div>
                         <br/>
-                        <h1 className="p-lg-5" style={{color: "white"}}>Popular Reviews</h1>
+                        <h1 className="p-lg-5 container-fluid" style={{color: "white"}}>Popular Reviews</h1>
                         <div>
-                            <div className="d-flex justify-content-center text-center">
+                            <div className="d-flex justify-content-center text-center container-fluid">
                                 {reviews.slice(3, 7).map((review, index) => (
                                     <div key={index} style={{ color: 'white' }} className="p-lg-5">
                                         <div className="bold-text justify-content-center text-center">
                                             {review.song.title}
                                         </div>
                                         {review.song.artist}
-                                        <img src={placeHold} height="220px" width="220px" className="p-2" alt={review.title}/>
+                                        <img src={placeHold} height="220px" width="220px" className="p-2 img-fluid" alt={review.title}/>
                                         <br/>
                                         {review.title} - {review.user}
                                         <br/>
@@ -195,16 +190,16 @@ class App extends Component {
                         <br/><br/> <br/><br/> <br/><br/> <br/><br/>
                         <h1 className="p-lg-5" style={{color: "white"}}><br/>Popular Playlists</h1>
                         <div>
-                            <div className="d-flex justify-content-center text-center">
+                            <div className="d-flex justify-content-center text-center container-fluid">
                                 {playlists.map((playlist, index) =>(
                                     <div key={index}  className="p-lg-5">
                                         <div className="bold-text" style={{ color: 'white' }}>
                                             {playlist.title}
                                         </div>
                                         <hr style={{ color: 'white' }}/>
-                                        <img src={placeHold} height="220px" width="220px" className="p-2" alt={playlist.title}/>
+                                        <img src={placeHold} height="220px" width="220px" className="p-2 img-fluid" alt={playlist.title}/>
                                         <hr/>
-                                        <ul className="list-group list-group-flush list-group-item-action" style={{ color: 'darkgray' }}>
+                                        <ul className="list-group list-group-flush list-group-item-action container-fluid" style={{ color: 'darkgray' }}>
                                             {playlist.songs.slice(0,3).map((songs, songIndex) => (
                                                 <Link to={`song_display?songs=${encodeURIComponent(songs)}`} key={songIndex} className="list-group-item list-group-item-action list-group-item-dark">
                                                     {songs}

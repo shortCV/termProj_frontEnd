@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import Playlist from './Playlist'
 import Search from './Search'
 import CreatePlay from './CreatePlay'
 import SongDisplay from "./songDisplay";
@@ -26,10 +25,6 @@ const router = createBrowserRouter([
     {
         path: "/",
         element: <App/>
-    },
-    {
-        path: "playlists",
-        element: <Playlist/>
     },
     {
         path: "search",
