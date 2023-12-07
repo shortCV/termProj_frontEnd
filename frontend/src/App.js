@@ -39,7 +39,7 @@ class App extends Component {
             .then(data => {
 
               this.setState({ songs: data });
-                console.log("hello", data);
+                console.log("Song Data:", data);
             })
             .catch(error => {
               console.error("Error fetching songs:", error);
@@ -69,7 +69,7 @@ class App extends Component {
             })
             .then(data => {
                 console.log("Playlist data:", data);
-                this.setState({ playlists: data.playlists });
+                this.setState({ playlists: data });
             })
             .catch(error => {
                 console.error("Error fetching playlists:", error);
@@ -192,8 +192,20 @@ class App extends Component {
                                             {playlist.title}
                                         </div>
                                         <hr style={{ color: 'white' }}/>
-                                        <img src={placeHold} height="220px" width="220px" className="p-2 img-fluid " alt={playlist.title}/>
+                                        <img src={playlist.cover_url} height="220px" width="220px" className="p-2 img-fluid " alt={playlist.title}/>
                                         <hr/>
+                                        {/*by {playlist.song.join(', ')}*/}
+
+                                        <ul data-tooltip-id="my-song-display" data-tooltip-content="Playlist songs - click on songs" data-tooltip-place="bottom" className="list-group list-group-flush list-group-item-action container-fluid" style={{ color: 'darkgray' }}>
+                                            {playlist.song.slice(0,3).map((song, songIndex) => (
+                                                <Link to={`song_display?songs=${encodeURIComponent(song)}`} key={songIndex} className="list-group-item list-group-item-action list-group-item-dark row-cols-auto">
+                                                    {song}
+                                                </Link>
+                                            ))}
+                                            <Tooltip id="my-song-display"/>
+                                        </ul>
+
+                                        {/*
                                         <ul data-tooltip-id="my-song-display" data-tooltip-content="Playlist songs - click on songs" data-tooltip-place="bottom" className="list-group list-group-flush list-group-item-action container-fluid" style={{ color: 'darkgray' }}>
                                             {playlist.songs.slice(0,3).map((songs, songIndex) => (
                                                 <Link to={`song_display?songs=${encodeURIComponent(songs)}`} key={songIndex} className="list-group-item list-group-item-action list-group-item-dark row-cols-auto">
@@ -202,6 +214,7 @@ class App extends Component {
                                             ))}
                                             <Tooltip id="my-song-display"/>
                                         </ul>
+                                        */}
                                     </div>
                                 ))}
                             </div>
