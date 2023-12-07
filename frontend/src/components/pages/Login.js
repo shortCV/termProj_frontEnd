@@ -5,18 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar'
 import Breadcrumbs from '../Breadcrumbs'
 
-
-async function loginUser(credentials) {
-    return fetch('http://localhost:8080/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
-    })
-        .then(data => data.json())
-}
-function Login(  props ) {
+function Login( props ) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -49,9 +38,8 @@ function Login(  props ) {
                     <br/>
                     <hr style={{color: "lightblue"}}/>
                     <button type="submit" className="btn btn-secondary">Login</button>
-                    <br/><br/><br/><br/><br/>
+                    <br/><br/><br/><br/>
                 </form>
-
             </div>
             <div className="bg-dark">
                 <div className="d-flex justify-content-center text-center">

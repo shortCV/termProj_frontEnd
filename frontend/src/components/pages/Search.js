@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from '../Navbar'
 import Breadcrumbs from '../Breadcrumbs'
+import { Tooltip } from 'react-tooltip'
 
 
 const Search = () => {
@@ -29,7 +30,7 @@ const Search = () => {
                 const response = await fetch(`http://127.0.0.1:8000/api/get_songs/?search_update=${searchQuery}`);
                 const data = await response.json();
                 console.log(data);
-                setFilteredSongs(data.songs);
+                setFilteredSongs(data);
             } catch (error) {
                 console.error("Something has gone wrong with filtering songs:", error);
             }
@@ -73,7 +74,7 @@ const Search = () => {
                 </div>
                 <h1 className="p-2 text-center " style={{color: "white"}}>Search</h1>
                 {error?(
-                    <div className="text-center" style={{ color: 'lightcoral' }}>
+                    <div className="text-center bold-text" style={{ color: 'lightcoral', fontSize: '20px' }}>
                         {error}
                     </div>
                 ):(

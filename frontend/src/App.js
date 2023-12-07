@@ -25,14 +25,6 @@ class App extends Component {
         intendedPage: '/',
     }
   }
-  /*
-  * handleLoginSuccess = () => {
-        this.setState({  isAuthenticated: true }, () => {
-            // Navigate to the intended page after successful login
-            this.navigate(this.state.intendedPage);
-        });
-    };
-    * */
 
     handleLogout = () => {
         // Call API service to logout
@@ -45,7 +37,9 @@ class App extends Component {
         fetch("http://127.0.0.1:8000/api/get_songs/")
             .then(response => response.json())
             .then(data => {
-              this.setState({ songs: data.songs });
+
+              this.setState({ songs: data });
+                console.log("hello", data);
             })
             .catch(error => {
               console.error("Error fetching songs:", error);
@@ -133,19 +127,18 @@ class App extends Component {
                 </div>
                 <div className="Gradient">
                     <div>
-                        <br/>
                         <h1 className="p-lg-5 container-fluid" style={{color: "white"}}>New Releases</h1>
                         {/* Display Songs */}
                         <div>
-                            <div className="d-flex justify-content-center text-center container-fluid">
+                            <div className="justify-content-center text-center row">
                                 {songs.slice(23, 27).map((song, index) => (
-                                    <div key={index} style={{ color: 'white' }} className="p-lg-5">
+                                    <div key={index} style={{ color: 'white' }} className="p-lg-5 col">
                                         <div className="bold-text">
                                             {song.title}
                                         </div>
                                         <br/>
                                         <div>
-                                            <img src={placeHold} height="220px" width="100% \9" className="p-2 img-fluid" alt={song.title}/>
+                                            <img src={song.cover_url} height="220px" width="100% \9" className="p-2 img-fluid" alt={song.title}/>
                                         </div>
 
                                         <br/>
@@ -161,9 +154,9 @@ class App extends Component {
                         <br/>
                         <h1 className="p-lg-5 container-fluid" style={{color: "white"}}>Popular Reviews</h1>
                         <div>
-                            <div className="d-flex justify-content-center text-center container-fluid">
+                            <div className="justify-content-center text-center row">
                                 {reviews.slice(3, 7).map((review, index) => (
-                                    <div key={index} style={{ color: 'white' }} className="p-lg-5">
+                                    <div key={index} style={{ color: 'white' }} className="p-lg-5 col">
                                         <div className="bold-text justify-content-center text-center">
                                             {review.song.title}
                                         </div>
@@ -177,7 +170,7 @@ class App extends Component {
                                         <hr/>
                                         {review.text}
                                         <br/><br/>
-                                        <div data-tooltip-id="my-like" data-tooltip-content="Press to like / unlike" data-tooltip-place="bottom">
+                                        <div className="col-sm-12 col-md-12" data-tooltip-id="my-like" data-tooltip-content="Press to like / unlike" data-tooltip-place="bottom">
                                             <LikeButton reviewId={review.id} initialLikes={review.likes} isAuthenticated={isAuthenticated} onLike={handleReviewLike} />
                                             <Tooltip id="my-like"/>
                                         </div>
@@ -192,18 +185,18 @@ class App extends Component {
                         <br/><br/> <br/><br/> <br/><br/> <br/><br/>
                         <h1 className="p-lg-5" style={{color: "white"}}><br/>Popular Playlists</h1>
                         <div>
-                            <div className="d-flex justify-content-center text-center container-fluid">
+                            <div className="justify-content-center text-center row">
                                 {playlists.map((playlist, index) =>(
-                                    <div key={index}  className="p-lg-5">
+                                    <div key={index}  className="p-lg-5 col-3">
                                         <div className="bold-text" style={{ color: 'white' }}>
                                             {playlist.title}
                                         </div>
                                         <hr style={{ color: 'white' }}/>
-                                        <img src={placeHold} height="220px" width="220px" className="p-2 img-fluid" alt={playlist.title}/>
+                                        <img src={placeHold} height="220px" width="220px" className="p-2 img-fluid " alt={playlist.title}/>
                                         <hr/>
                                         <ul data-tooltip-id="my-song-display" data-tooltip-content="Playlist songs - click on songs" data-tooltip-place="bottom" className="list-group list-group-flush list-group-item-action container-fluid" style={{ color: 'darkgray' }}>
                                             {playlist.songs.slice(0,3).map((songs, songIndex) => (
-                                                <Link to={`song_display?songs=${encodeURIComponent(songs)}`} key={songIndex} className="list-group-item list-group-item-action list-group-item-dark">
+                                                <Link to={`song_display?songs=${encodeURIComponent(songs)}`} key={songIndex} className="list-group-item list-group-item-action list-group-item-dark row-cols-auto">
                                                     {songs}
                                                 </Link>
                                             ))}

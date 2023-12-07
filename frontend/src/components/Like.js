@@ -18,7 +18,7 @@ const LikeButton = ({ reviewId, initialLikes, isAuthenticated, onLike }) => {
     };
 
     return (
-        <button type="button" className="btn-secondary" onClick={handleLike}>
+        <button type="button" className="btn-secondary col-auto" onClick={handleLike}>
             <img src={Heart} width="15" height="15" alt="Heart Logo" className={`d-inline-block ${isLiked ? 'liked' : ''}`} />
             {isAuthenticated && <span> Like review | {likes}</span>}
         </button>

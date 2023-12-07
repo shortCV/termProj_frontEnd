@@ -49,6 +49,7 @@ const CreatePlay = () => {
                                     <option value={song} className="list-group-item list-group-item-action list-group-item-dark" key={song.title}>{song.title} by {song.artist.join(', ')}</option>
                                 ))}
                             </select>
+                            <br/>
                             <div className="col-md-12 text-center p-2">
                                 {playlistTitle.trim() ? (
                                     <Link to={`/`}>

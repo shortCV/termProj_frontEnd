@@ -15,11 +15,9 @@ import {
 import Login from "./components/pages/Login";
 
 const handleLoginSuccess = () => {
-    this.setState({ isAuthenticated: true }, () => {
-        // Navigate to the intended page after successful login
-        this.navigate("/");
-    });
+    this.setState({ isAuthenticated: true });
 };
+
 //helped figure out how to use different pages: https://www.youtube.com/watch?v=o05ZP6_JQqE
 
 const router = createBrowserRouter([
