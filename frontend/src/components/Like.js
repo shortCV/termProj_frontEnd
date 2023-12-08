@@ -6,19 +6,20 @@ const LikeButton = ({ reviewId, initialLikes, isAuthenticated, onLike }) => {
     const [isLiked, setIsLiked] = useState(false);
 
     const handleLike = () => {
+        // help from chatgpt was used here
 
-        // For demonstration purposes, I'll just toggle the state here
+        //toggle the state here
         setIsLiked(!isLiked);
         setLikes(isLiked ? likes - 1 : likes + 1);
 
-        // Call the onLike callback if provided
+        //call the onLike callback if provided
         if (onLike) {
-            onLike(reviewId, !isLiked); // Pass reviewId and the new like status to the parent component
+            onLike(reviewId, !isLiked); //pass reviewId and the new like status to the parent component
         }
     };
 
     return (
-        <button type="button" className="btn-secondary" onClick={handleLike}>
+        <button type="button" className="btn-secondary col-auto" onClick={handleLike}>
             <img src={Heart} width="15" height="15" alt="Heart Logo" className={`d-inline-block ${isLiked ? 'liked' : ''}`} />
             {isAuthenticated && <span> Like review | {likes}</span>}
         </button>

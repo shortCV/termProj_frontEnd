@@ -15,13 +15,11 @@ import {
 import Login from "./components/pages/Login";
 
 const handleLoginSuccess = () => {
-    this.setState({ isAuthenticated: true }, () => {
-        // Navigate to the intended page after successful login
-        this.navigate("/");
-    });
+    this.setState({ isAuthenticated: true });
 };
-//helped figure out how to use different pages: https://www.youtube.com/watch?v=o05ZP6_JQqE
 
+//helped figure out how to use different pages: https://www.youtube.com/watch?v=o05ZP6_JQqE
+//router has different pages path
 const router = createBrowserRouter([
     {
         path: "/",
@@ -52,8 +50,4 @@ root.render(
 
 );
 
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

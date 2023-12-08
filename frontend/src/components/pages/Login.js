@@ -5,18 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar'
 import Breadcrumbs from '../Breadcrumbs'
 
-
-async function loginUser(credentials) {
-    return fetch('http://localhost:8080/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
-    })
-        .then(data => data.json())
-}
-function Login(  props ) {
+//login page
+function Login( props ) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -36,11 +26,13 @@ function Login(  props ) {
 
     return (
         <div className=" Gradient">
+            {/* nav bar */}
             <Navbar ></Navbar>
-            {/* Get similar margins to the To Do List */}
+            {/* page */}
             <div className="col-md-6 col-sm-10 mt-4 mx-auto p-0">
                 <Breadcrumbs></Breadcrumbs>
                 <h1 className="p-2 text-center " style={{color: "white"}}>Login</h1>
+                {/* hypothetically submit would send the info and sign you in on the front end */}
                 <form onSubmit={handleSubmit} className="p-2 text-center " >
                     <hr style={{color: "lightblue"}}/>
                     <input type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" />
@@ -49,10 +41,10 @@ function Login(  props ) {
                     <br/>
                     <hr style={{color: "lightblue"}}/>
                     <button type="submit" className="btn btn-secondary">Login</button>
-                    <br/><br/><br/><br/><br/>
+                    <br/><br/><br/><br/>
                 </form>
-
             </div>
+            {/* footer */}
             <div className="bg-dark">
                 <div className="d-flex justify-content-center text-center">
                     <h5 className="p-4 bold-text" style={{color: "lightsteelblue"}}>About</h5>
@@ -62,6 +54,7 @@ function Login(  props ) {
                     <h5 className="p-4 bold-text" style={{color: "lightsteelblue"}}>Socials</h5>
                 </div>
             </div>
+            {/* extra design stuff */}
             <div className="bg-dark">
                 <div className="d-flex justify-content-center text-center">
                     <hr/>

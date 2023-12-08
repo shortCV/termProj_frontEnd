@@ -1,7 +1,7 @@
 
-const API_URL = 'http://127.0.0.1:8000';
 
 // Log in!
+//based on previously given login code from class
 export function login(username, password) {
     return fetch("http://127.0.0.1:8000/login_view/", {
         method: 'POST',
@@ -9,6 +9,7 @@ export function login(username, password) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
+        credentials: 'include'
 
     })
         .then(response => {

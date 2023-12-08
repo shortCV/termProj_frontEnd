@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Navbar from '../Navbar'
 import { Link, useLocation } from 'react-router-dom';
 import placeHold from '../images/placeholder-image-dark.jpg'
 import { CDBRating, CDBContainer } from 'cdbreact';
 import Breadcrumbs from '../Breadcrumbs'
+import { Tooltip } from 'react-tooltip'
 
 
 //rating: https://www.devwares.com/docs/contrast/react/components/rating/
@@ -41,6 +42,7 @@ const SongDisplay = () => {
                     <h1  style={{color: "white"}}> Review</h1>
                     <div className="p d-flex">
                         <input type="text" className="form-control  w-25" name="" placeholder="Review title " />
+                        {/* rating stars */}
                         <CDBContainer>
                             <CDBRating feedback />
                         </CDBContainer>
@@ -49,9 +51,10 @@ const SongDisplay = () => {
                     <textarea className="form-control p-2" rows="3" name="" placeholder="Write your review" />
                     <div className="col-md-12 text-end p-2">
                         <Link to={`/`}>
-                            <button className="btn btn-primary">
+                            <button className="btn btn-primary" data-tooltip-id="my-submit" data-tooltip-content="Submit your review" data-tooltip-place="bottom">
                                 Submit
                             </button>
+                            <Tooltip id="my-submit"/>
                         </Link>
                     </div>
                 </div>
