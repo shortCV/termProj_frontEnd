@@ -45,6 +45,7 @@ const Navbard = ({ isAuthenticated, onLogout }) => {
                             </NavDropdown>
                         )}
                     </Nav>
+                    {/*if auth. show log out otherwise show log in / create account */}
                     {isAuthenticated ? (
                         <Nav className="justify-content-end">
                             <Nav.Link onClick={onLogout}>

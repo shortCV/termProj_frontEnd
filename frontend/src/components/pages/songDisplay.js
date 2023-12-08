@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Navbar from '../Navbar'
 import { Link, useLocation } from 'react-router-dom';
 import placeHold from '../images/placeholder-image-dark.jpg'
@@ -42,6 +42,7 @@ const SongDisplay = () => {
                     <h1  style={{color: "white"}}> Review</h1>
                     <div className="p d-flex">
                         <input type="text" className="form-control  w-25" name="" placeholder="Review title " />
+                        {/* rating stars */}
                         <CDBContainer>
                             <CDBRating feedback />
                         </CDBContainer>

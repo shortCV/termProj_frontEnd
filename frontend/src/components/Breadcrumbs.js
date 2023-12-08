@@ -6,12 +6,13 @@ export default function Breadcrumbs(){
     const location = useLocation()
 
     let currentLink = ''
-
+    /* filter to get previous crumb link */
     const crumbs = location.pathname.split('/')
         .filter(crumb => crumb !== '')
         .map(crumb => {
             currentLink =+ `/${crumb}`
 
+            /* crumb display + link */
             return(
                 <div className="crumb p-2" key={crumb}>
                     <Link to={'/'}> home - </Link>
@@ -19,7 +20,7 @@ export default function Breadcrumbs(){
                 </div>
             )
         })
-
+    // return display
     return(
         <div className="breadcrumbs">
             {crumbs}

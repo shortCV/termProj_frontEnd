@@ -6,14 +6,15 @@ const LikeButton = ({ reviewId, initialLikes, isAuthenticated, onLike }) => {
     const [isLiked, setIsLiked] = useState(false);
 
     const handleLike = () => {
+        // help from chatgpt was used here
 
-        // For demonstration purposes, I'll just toggle the state here
+        //toggle the state here
         setIsLiked(!isLiked);
         setLikes(isLiked ? likes - 1 : likes + 1);
 
-        // Call the onLike callback if provided
+        //call the onLike callback if provided
         if (onLike) {
-            onLike(reviewId, !isLiked); // Pass reviewId and the new like status to the parent component
+            onLike(reviewId, !isLiked); //pass reviewId and the new like status to the parent component
         }
     };
 

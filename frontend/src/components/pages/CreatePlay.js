@@ -6,14 +6,15 @@ import Breadcrumbs from '../Breadcrumbs'
 const CreatePlay = () => {
 
     const [songs, setSongs] = useState([]);
-    const [playlistTitle, setPlaylistTitle] = useState(''); // State to track the playlist title
+    const [playlistTitle, setPlaylistTitle] = useState(''); //state tracking the playlist title
 
+    //fetch songs
     useEffect(() => {
         const fetchSongs = async () => {
             try {
                 const response = await fetch("http://127.0.0.1:8000/api/get_songs/");
                 const data = await response.json();
-                setSongs(data.songs);
+                setSongs(data);
             } catch (error) {
                 console.error("Something went wrong with fetching songs:", error);
             }
@@ -44,6 +45,7 @@ const CreatePlay = () => {
                         <input type="text" className="form-control p-2" name="playTitle" placeholder="playlist title" value={playlistTitle} onChange={handleTitleChange}/>
                         <div>
                             <br/>
+                            {/* display songs */}
                             <select className="form-select" aria-label="Default select example" multiple size="10">
                                 {songs.map((song) => (
                                     <option value={song} className="list-group-item list-group-item-action list-group-item-dark" key={song.title}>{song.title} by {song.artist.join(', ')}</option>
@@ -51,6 +53,7 @@ const CreatePlay = () => {
                             </select>
                             <br/>
                             <div className="col-md-12 text-center p-2">
+                                {/* if playlist has a name */}
                                 {playlistTitle.trim() ? (
                                     <Link to={`/`}>
                                         <button className="btn btn-primary">
@@ -59,6 +62,7 @@ const CreatePlay = () => {
                                     </Link>
                                 ) : (
                                     <button className="btn btn-primary" disabled>
+                                        {/* if playlist does not have a name, unable to create playlist */}
                                         Create
                                     </button>
                                 )}

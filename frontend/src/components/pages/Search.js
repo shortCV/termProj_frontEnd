@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from '../Navbar'
 import Breadcrumbs from '../Breadcrumbs'
-import { Tooltip } from 'react-tooltip'
-
 
 const Search = () => {
 
