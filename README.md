@@ -66,3 +66,4 @@ Then click OK, and you should be able to run your frontend with the green play b
 
 - Hovering over UI elements triggers tooltip explanations (can be seen on main screen)
 - Use of breadcrumbs
+- Link: https://github.com/shortCV/termProj_frontEnd
